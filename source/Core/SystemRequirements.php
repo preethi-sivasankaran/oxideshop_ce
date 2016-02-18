@@ -1143,10 +1143,19 @@ class SystemRequirements
         $sSql = "select * from oxtplblocks where oxactive=1 and oxshopid=$sShpIdParam";
         $rs = $oDb->execute($sSql);
 
+        // take theme id
+        $theme = oxNew('oxTheme');
+        $activeThemeId = $theme->getActiveThemeId();
 
         $aRet = array();
         if ($rs != false && $rs->recordCount() > 0) {
             while (!$rs->EOF) {
+
+                // skip reporting if block is described for not currently active theme.
+                if ($rs->fields['OXTHEME'] && $rs->fields['OXTHEME'] !== $activeThemeId) {
+                    continue;
+                }
+
                 $blStatus = false;
                 if (isset($aCache[$rs->fields['OXTEMPLATE']]) &&
                     isset($aCache[$rs->fields['OXTEMPLATE']][$rs->fields['OXBLOCKNAME']])

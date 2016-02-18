@@ -1497,18 +1497,32 @@ class oxConfig extends oxSuperCfg
         $sTemplatePath = $this->getDir($sFile, $this->_sTemplateDir, $blAdmin);
 
         if (!$sTemplatePath) {
-            $sBasePath = getShopBasePath();
             $aModuleTemplates = $this->getConfigParam('aModuleTemplates');
 
             $oModulelist = oxNew('oxmodulelist');
             $aActiveModuleInfo = $oModulelist->getActiveModuleInfo();
             if (is_array($aModuleTemplates) && is_array($aActiveModuleInfo)) {
                 foreach ($aModuleTemplates as $sModuleId => $aTemplates) {
-                    if (isset($aTemplates[$sFile]) && isset($aActiveModuleInfo[$sModuleId])) {
-                        $sPath = $aTemplates[$sFile];
-                        $sPath = $sBasePath . 'modules/' . $sPath;
-                        if (is_file($sPath) && is_readable($sPath)) {
-                            $sTemplatePath = $sPath;
+
+                    // check if module is active
+                    if (isset($aActiveModuleInfo[$sModuleId])) {
+
+                        // if the first element is array, so we have new structure with themes filter
+                        // else old structure without themes
+                        if (is_array(reset($aTemplates))) {
+                            $theme = oxNew('oxTheme');
+                            $activeThemeId = $theme->getActiveThemeId();
+
+                            if (isset($aTemplates[$activeThemeId], $aTemplates[$activeThemeId][$sFile])
+                            && $bufferForPreparedPath = $this->prepareModuleTemplatePath($aTemplates[$activeThemeId][$sFile])) {
+                                $sTemplatePath = $bufferForPreparedPath;
+                            } elseif (isset($aTemplates['default'], $aTemplates['default'][$sFile])
+                            && $bufferForPreparedPath = $this->prepareModuleTemplatePath($aTemplates['default'][$sFile])) {
+                                $sTemplatePath = $bufferForPreparedPath;
+                            }
+                        } elseif (isset($aTemplates[$sFile])
+                        && $bufferForPreparedPath = $this->prepareModuleTemplatePath($aTemplates[$sFile])) {
+                            $sTemplatePath = $bufferForPreparedPath;
                         }
                     }
                 }
@@ -1516,6 +1530,27 @@ class oxConfig extends oxSuperCfg
         }
 
         return $sTemplatePath;
+    }
+
+    /**
+     * Checks if module template exists.
+     * Returns template path if exists and null if not.
+     *
+     * @param string $templatePath
+     *
+     * @return string|null
+     */
+    protected function prepareModuleTemplatePath($templatePath)
+    {
+        $sBasePath = getShopBasePath();
+        $fullTemplatePath = $sBasePath . 'modules/' . $templatePath;
+
+        $result = null;
+        if (is_file($fullTemplatePath) && is_readable($fullTemplatePath)) {
+            $result = $fullTemplatePath;
+        }
+
+        return $result;
     }
 
     /**
