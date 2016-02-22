@@ -1507,21 +1507,17 @@ class oxConfig extends oxSuperCfg
                     // check if module is active
                     if (isset($aActiveModuleInfo[$sModuleId])) {
 
-                        // if the first element is array, so we have new structure with themes filter
-                        // else old structure without themes
-                        if (is_array(reset($aTemplates))) {
-                            $theme = oxNew('oxTheme');
-                            $activeThemeId = $theme->getActiveThemeId();
+                        $theme = oxNew('oxTheme');
+                        $activeThemeId = $theme->getActiveThemeId();
 
-                            if (isset($aTemplates[$activeThemeId], $aTemplates[$activeThemeId][$sFile])
-                            && $bufferForPreparedPath = $this->prepareModuleTemplatePath($aTemplates[$activeThemeId][$sFile])) {
-                                $sTemplatePath = $bufferForPreparedPath;
-                            } elseif (isset($aTemplates['default'], $aTemplates['default'][$sFile])
-                            && $bufferForPreparedPath = $this->prepareModuleTemplatePath($aTemplates['default'][$sFile])) {
-                                $sTemplatePath = $bufferForPreparedPath;
-                            }
+                        // check if template for specific theme exists, else take default template
+                        if (isset($aTemplates[$activeThemeId], $aTemplates[$activeThemeId][$sFile])
+                            && $bufferForPreparedPath = $this->prepareModuleTemplatePath($aTemplates[$activeThemeId][$sFile])
+                        ) {
+                            $sTemplatePath = $bufferForPreparedPath;
                         } elseif (isset($aTemplates[$sFile])
-                        && $bufferForPreparedPath = $this->prepareModuleTemplatePath($aTemplates[$sFile])) {
+                            && $bufferForPreparedPath = $this->prepareModuleTemplatePath($aTemplates[$sFile])
+                        ) {
                             $sTemplatePath = $bufferForPreparedPath;
                         }
                     }
