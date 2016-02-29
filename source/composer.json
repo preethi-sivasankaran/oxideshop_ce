@@ -27,6 +27,7 @@
         }
     },
     "require-dev": {
+        "doctrine/dbal": "v2.5.4",
         "oxid-esales/testing-library": "dev-master",
         "oxid-esales/coding-standards": "dev-master",
         "incenteev/composer-parameter-handler": "~2.0"

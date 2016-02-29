@@ -30,6 +30,7 @@ use mysqli_meta_ADOConnection as mysqli_extra;
 use object_ADOConnection;
 use object_ResultSet;
 use pear_ADOConnection;
+use OxidEsales\Eshop\Core\Db\oxDoctrineDatabase;
 
 /**
  * Database connection class
@@ -86,7 +87,15 @@ class LegacyDatabase extends \oxSuperCfg
      */
     public function getOne($query, $parameters = false, $type = true)
     {
-        return $this->getDb($type)->getOne($query, $parameters);
+        $row = $this->getDb($type)->getOne($query, $parameters);
+
+        if (0 < strpos($query, 'oxkeywords')) {
+            $doctrineDatabase = new oxDoctrineDatabase();
+
+            $row = $doctrineDatabase->getOne($query, $parameters);
+        }
+
+        return $row;
     }
 
     /**
@@ -114,7 +123,14 @@ class LegacyDatabase extends \oxSuperCfg
      */
     public function getRow($query, $parameters = false, $type = true)
     {
-        return $this->getDb($type)->getRow($query, $parameters);
+        $row = $this->getDb($type)->getRow($query, $parameters);
+
+        if (0 < strpos($query, 'oxagb')) {
+            $doctrineDatabase = new oxDoctrineDatabase();
+
+            $row = $doctrineDatabase->getRow($query, $parameters)->fetchRow();
+        }
+        return $row;
     }
 
     /**
@@ -142,7 +158,15 @@ class LegacyDatabase extends \oxSuperCfg
      */
     public function select($query, $parameters = false, $type = true)
     {
-        return $this->getDb($type)->execute($query, $parameters);
+        $result = $this->getDb($type)->execute($query, $parameters);
+
+        if (0 < strpos($query, 'aLanguageURLs')) {
+            $doctrineDatabase = new oxDoctrineDatabase();
+
+            $result = $doctrineDatabase->select($query, $parameters, $type);
+        }
+
+        return $result;
     }
 
     /**
