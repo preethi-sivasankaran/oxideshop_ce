@@ -10,17 +10,26 @@ use OxidEsales\Eshop\Core\Db\oxDoctrineDatabase;
  */
 class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
 {
+
+    /**
+     * @var oxDoctrineDatabase
+     */
+    protected $connection = null;
+
+    public function setUp()
+    {
+        $this->connection = new oxDoctrineDatabase();
+    }
+
     /**
      * Test, that the connection is set correctly.
      */
     public function testConnection()
     {
-        $doctrineDatabase = new oxDoctrineDatabase();
-
         $connection = 'our connection mock';
-        $doctrineDatabase->setConnection($connection);
+        $this->connection->setConnection($connection);
 
-        $this->assertEquals($connection, $doctrineDatabase->getDb());
+        $this->assertEquals($connection, $this->connection->getDb());
     }
 
     /**
@@ -28,11 +37,9 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
      */
     public function testQueryWithSelectFromEmptyTable()
     {
-        $doctrineDatabase = new oxDoctrineDatabase();
-
         $sql = 'SELECT * FROM oxaddress;';
         $parameters = array();
-        $statement = $doctrineDatabase->query($sql, $parameters);
+        $statement = $this->connection->query($sql, $parameters);
 
         $result = array();
         while ($row = $statement->fetchRow()) {
@@ -47,11 +54,9 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
      */
     public function testQueryWithSelectFromFilledTable()
     {
-        $doctrineDatabase = new oxDoctrineDatabase();
-
         $sql = 'SELECT * FROM oxwrapping;';
         $parameters = array();
-        $statement = $doctrineDatabase->query($sql, $parameters);
+        $statement = $this->connection->query($sql, $parameters);
 
         $result = array();
         while ($row = $statement->fetchRow()) {
@@ -62,7 +67,8 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
 
         $this->assertNotEmpty($result, 'We got no result from the database.');
         $this->assertEquals($rowCount, count($result));
-        $this->assertDbResultHasOxIds($result,
+        $this->assertDbResultHasOxIds(
+            $result,
             array(
                 'a6840cc0ec80b3991.74884864',
                 '81b40cf076351c229.14252649',
@@ -77,12 +83,10 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
      */
     public function testQueryWithSelectWithParameters()
     {
-        $doctrineDatabase = new oxDoctrineDatabase();
-
         $sql = "SELECT oxid,oxtitle FROM oxarticles WHERE oxid = ?;";
         $oxid = '6b6099c305f591cb39d4314e9a823fc1';
         $parameters = array($oxid);
-        $statement = $doctrineDatabase->query($sql, $parameters);
+        $statement = $this->connection->query($sql, $parameters);
 
         $result = array();
         while ($row = $statement->fetchRow()) {
@@ -94,6 +98,40 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
         $this->assertEquals($rowCount, count($result));
         $this->assertEquals($oxid, $result[0]['oxid']);
         $this->assertEquals('Stewart+Brown Shirt Kisser Fish', $result[0]['oxtitle']);
+    }
+
+    public function testTransactionRollbacked()
+    {
+        $this->markTestSkipped('Not running yet!');
+
+        $this->assertOriginalVendorIds();
+
+        $this->connection->startTransaction();
+        $statement = $this->connection->execute("INSERT INTO oxvendor (OXID) VALUES ('123');", array());
+
+        $this->assertChangedVendorIds();
+
+        $this->connection->rollbackTransaction();
+
+        $this->assertOriginalVendorIds();
+    }
+
+    public function testTransactionCommitted()
+    {
+        $this->deleteAddedVendor();
+
+        $this->assertOriginalVendorIds();
+
+        $this->connection->startTransaction();
+        $statement = $this->connection->execute("INSERT INTO oxvendor (OXID) VALUES ('123');", array());
+
+        $this->assertChangedVendorIds();
+
+        $this->connection->commitTransaction();
+
+        $this->assertChangedVendorIds();
+
+        $this->deleteAddedVendor();
     }
 
     /**
@@ -113,6 +151,7 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
 
     /**
      * @param $databaseResults
+     *
      * @return array
      */
     protected function extractOxIds($databaseResults)
@@ -125,4 +164,59 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
 
         return $oxIds;
     }
+
+    /**
+     * Fetch all the oxId's of a statement.
+     *
+     * @param $statement
+     *
+     * @return array
+     */
+    private function fetchOxIds($statement)
+    {
+        $result = array();
+        while ($row = $statement->fetchRow()) {
+            $result[] = $row['OXID'];
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $doctrineDatabase
+     *
+     * @return array
+     */
+    private function assertOriginalVendorIds()
+    {
+        $sql = "SELECT OXID FROM oxvendor;";
+        $statement = $this->connection->query($sql, null);
+
+        $result = $this->fetchOxIds($statement);
+        $expected = array('68342e2955d7401e6.18967838', '77442e37fdf34ccd3.94620745', '9437def212dc37c66f90cc249143510a');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @param $doctrineDatabase
+     *
+     * @return array
+     */
+    private function assertChangedVendorIds()
+    {
+        $sql = "SELECT OXID FROM oxvendor;";
+        $statement = $this->connection->query($sql, null);
+
+        $result = $this->fetchOxIds($statement);
+        $expected = array('123', '68342e2955d7401e6.18967838', '77442e37fdf34ccd3.94620745', '9437def212dc37c66f90cc249143510a');
+
+        $this->assertEquals($expected, $result);
+    }
+
+    private function deleteAddedVendor()
+    {
+        $this->connection->execute("DELETE FROM oxvendor WHERE OXID = '123';", array('a' => 'a'));
+    }
+
 }

@@ -183,7 +183,15 @@ class oxDoctrineDatabase extends \oxSuperCfg
 
     public function execute($query, $parameters = false)
     {
-        return $this->query($query, $parameters);
+        if (0 <= strpos($query, 'INSERT')) {
+            $s = $this->getConnection()->exec($query, $parameters);
+
+//            $this->getConnection()->insert('oxvendor', array('oxid' => '123123'));
+            return null;
+        }
+        $statement = $this->getConnection()->prepare($query);
+
+        return $statement->execute();
     }
 
     public function getCol($query, $parameters = false, $type = true)
@@ -212,7 +220,7 @@ class oxDoctrineDatabase extends \oxSuperCfg
      */
     public function startTransaction()
     {
-//        return $this->getDb(false)->execute('START TRANSACTION');
+        return $this->getConnection()->beginTransaction();
     }
 
     /**
@@ -222,7 +230,7 @@ class oxDoctrineDatabase extends \oxSuperCfg
      */
     public function commitTransaction()
     {
-//        return $this->getDb(false)->execute('COMMIT');
+        return $this->getConnection()->commit();
     }
 
     /**
@@ -232,7 +240,7 @@ class oxDoctrineDatabase extends \oxSuperCfg
      */
     public function rollbackTransaction()
     {
-//        return $this->getDb(false)->execute('ROLLBACK');
+        return $this->getConnection()->rollBack();
     }
 
 
@@ -284,14 +292,18 @@ class oxDoctrineDatabase extends \oxSuperCfg
      */
     protected function createConnection()
     {
-        /**
-         * @todo: exchange the deprecated configuration
-         */
-        $config = new \Doctrine\DBAL\Configuration();
+        $connection = DriverManager::getConnection($this->getConnectionParameters());
+//        $connection->setAutoCommit(false);
+//        var_dump($connection->isAutoCommit());
 
-        $connectionParams = $this->getConnectionParameters();
+//        $connection->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
 
-        return DriverManager::getConnection($connectionParams, $config);
+        return $connection;
+    }
+
+    public function setAutoCommit($autoCommit)
+    {
+        $this->getConnection()->setAutoCommit($autoCommit);
     }
 
     /**
