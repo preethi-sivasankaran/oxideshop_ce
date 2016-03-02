@@ -102,17 +102,17 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
 
     public function testTransactionRollbacked()
     {
-        $this->markTestSkipped('Not running yet!');
-
         $this->assertOriginalVendorIds();
 
         $this->connection->startTransaction();
-        $statement = $this->connection->execute("INSERT INTO oxvendor (OXID) VALUES ('123');", array());
+        $this->connection->execute("INSERT INTO oxorderfiles (OXID) VALUES ('123');", array());
 
+        // assure, that the changes are made in this transaction
         $this->assertChangedVendorIds();
 
         $this->connection->rollbackTransaction();
 
+        // assure, that the changes are reverted
         $this->assertOriginalVendorIds();
     }
 
@@ -123,14 +123,17 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
         $this->assertOriginalVendorIds();
 
         $this->connection->startTransaction();
-        $statement = $this->connection->execute("INSERT INTO oxvendor (OXID) VALUES ('123');", array());
+        $this->connection->execute("INSERT INTO oxorderfiles (OXID) VALUES ('123');", array());
 
+        // assure, that the changes are made in this transaction
         $this->assertChangedVendorIds();
 
         $this->connection->commitTransaction();
 
+        // assure, that the changes persist the transaction
         $this->assertChangedVendorIds();
 
+        // clean up
         $this->deleteAddedVendor();
     }
 
@@ -189,11 +192,11 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
      */
     private function assertOriginalVendorIds()
     {
-        $sql = "SELECT OXID FROM oxvendor;";
+        $sql = "SELECT OXID FROM oxorderfiles;";
         $statement = $this->connection->query($sql, null);
 
         $result = $this->fetchOxIds($statement);
-        $expected = array('68342e2955d7401e6.18967838', '77442e37fdf34ccd3.94620745', '9437def212dc37c66f90cc249143510a');
+        $expected = array();
 
         $this->assertEquals($expected, $result);
     }
@@ -205,18 +208,18 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
      */
     private function assertChangedVendorIds()
     {
-        $sql = "SELECT OXID FROM oxvendor;";
+        $sql = "SELECT OXID FROM oxorderfiles;";
         $statement = $this->connection->query($sql, null);
 
         $result = $this->fetchOxIds($statement);
-        $expected = array('123', '68342e2955d7401e6.18967838', '77442e37fdf34ccd3.94620745', '9437def212dc37c66f90cc249143510a');
+        $expected = array('123');
 
         $this->assertEquals($expected, $result);
     }
 
     private function deleteAddedVendor()
     {
-        $this->connection->execute("DELETE FROM oxvendor WHERE OXID = '123';", array('a' => 'a'));
+        $this->connection->execute("DELETE FROM oxorderfiles WHERE OXID = '123';", array('a' => 'a'));
     }
 
 }
