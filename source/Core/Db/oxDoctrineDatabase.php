@@ -293,10 +293,6 @@ class oxDoctrineDatabase extends \oxSuperCfg
     protected function createConnection()
     {
         $connection = DriverManager::getConnection($this->getConnectionParameters());
-//        $connection->setAutoCommit(false);
-//        var_dump($connection->isAutoCommit());
-
-//        $connection->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\EchoSQLLogger());
 
         return $connection;
     }

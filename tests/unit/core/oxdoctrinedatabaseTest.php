@@ -3,6 +3,8 @@
  * #PHPHEADER_OXID_LICENSE_INFORMATION#
  */
 
+use Doctrine\DBAL\Connections\MasterSlaveConnection;
+use Doctrine\DBAL\DriverManager;
 use OxidEsales\Eshop\Core\Db\oxDoctrineDatabase;
 
 /**
@@ -108,7 +110,7 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
         $this->connection->execute("INSERT INTO oxorderfiles (OXID) VALUES ('123');", array());
 
         // assure, that the changes are made in this transaction
-        $this->assertChangedVendorIds();
+        $this->assertChangedOrderFilesIds();
 
         $this->connection->rollbackTransaction();
 
@@ -118,7 +120,7 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
 
     public function testTransactionCommitted()
     {
-        $this->deleteAddedVendor();
+        $this->deleteAddedOrderFiles();
 
         $this->assertOriginalVendorIds();
 
@@ -126,15 +128,79 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
         $this->connection->execute("INSERT INTO oxorderfiles (OXID) VALUES ('123');", array());
 
         // assure, that the changes are made in this transaction
-        $this->assertChangedVendorIds();
+        $this->assertChangedOrderFilesIds();
 
         $this->connection->commitTransaction();
 
         // assure, that the changes persist the transaction
-        $this->assertChangedVendorIds();
+        $this->assertChangedOrderFilesIds();
 
         // clean up
-        $this->deleteAddedVendor();
+        $this->deleteAddedOrderFiles();
+    }
+
+    /**
+     * Test the setup of a doctrine master/slave connection.
+     *
+     * This test only runs, if you setup a master database on 33.33.33.30 and the fitting slave on 33.33.33.34
+     * --> it is not intended to end in the production test code :)
+     */
+    public function testMasterSlaveSetUp()
+    {
+        $connection = $this->createMasterSlaveConnection();
+
+        // we haven't connected to any of the mysql servers, the master shouldn't be connected yet
+        $this->assertFalse($connection->isConnectedToMaster());
+
+        $successSlave = $connection->connect('slave'); // worked without 'slave', but i found it unintuitive, so i let it here
+        $successMaster = $connection->connect('master');
+
+        $this->assertTrue($successMaster);
+        $this->assertTrue($successSlave);
+
+        // we've connected, the master should be connected now
+        $this->assertTrue($connection->isConnectedToMaster());
+
+        return $connection;
+    }
+
+    /**
+     * Test the writing to a master/slave and reading from the slave, if things went well.
+     *
+     * This test only runs, if you setup a master database on 33.33.33.30 and the fitting slave on 33.33.33.34
+     * --> it is not intended to end in the production test code :)
+     */
+    public function testMasterSlaveWriteToConnectionAndCheckSlave()
+    {
+        $connection = $this->testMasterSlaveSetUp();
+
+        $slaveConnection = DriverManager::getConnection(
+            array(
+                'dbname'   => 'oxid',
+                'user'     => 'oxid',
+                'password' => 'oxid',
+                'host'     => '33.33.33.30',
+                'driver'   => 'pdo_mysql',
+            )
+        );
+
+        $orderFilesIds = $this->fetchOrderFilesIdsFromSlave($slaveConnection);
+        $this->assertEmpty($orderFilesIds);
+
+        $this->assertOriginalVendorIds($slaveConnection);
+        $connection->exec("INSERT INTO oxorderfiles (OXID) VALUES ('123');", array());
+
+        $orderFilesIds = $this->fetchOrderFilesIdsFromSlave($slaveConnection);
+        $this->assertNotEmpty($orderFilesIds);
+        $this->assertEquals($orderFilesIds[0]['OXID'], '123');
+
+        $this->assertChangedOrderFilesIds($slaveConnection);
+        $this->deleteAddedOrderFiles();
+
+        $this->assertOriginalVendorIds($slaveConnection);
+
+        $orderFilesIds = $this->fetchOrderFilesIdsFromSlave($slaveConnection);
+        $this->assertEmpty($orderFilesIds);
     }
 
     /**
@@ -185,11 +251,6 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
         return $result;
     }
 
-    /**
-     * @param $doctrineDatabase
-     *
-     * @return array
-     */
     private function assertOriginalVendorIds()
     {
         $sql = "SELECT OXID FROM oxorderfiles;";
@@ -201,12 +262,7 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
         $this->assertEquals($expected, $result);
     }
 
-    /**
-     * @param $doctrineDatabase
-     *
-     * @return array
-     */
-    private function assertChangedVendorIds()
+    private function assertChangedOrderFilesIds()
     {
         $sql = "SELECT OXID FROM oxorderfiles;";
         $statement = $this->connection->query($sql, null);
@@ -217,9 +273,59 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
         $this->assertEquals($expected, $result);
     }
 
-    private function deleteAddedVendor()
+    private function deleteAddedOrderFiles()
     {
         $this->connection->execute("DELETE FROM oxorderfiles WHERE OXID = '123';", array('a' => 'a'));
     }
 
+    /**
+     * @throws \Doctrine\DBAL\DBALException
+     *
+     * @return MasterSlaveConnection
+     */
+    private function createMasterSlaveConnection()
+    {
+        $dbUser = 'oxid';
+        $dbPassword = 'oxid';
+        $dbName = 'oxid';
+
+        $masterIP = '33.33.33.30';
+        $slaveIP = '33.33.33.34';
+
+        /**
+         * @var MasterSlaveConnection $connection
+         */
+        $connection = DriverManager::getConnection(
+            array(
+                'wrapperClass' => 'Doctrine\DBAL\Connections\MasterSlaveConnection',
+                'driver'       => 'pdo_mysql',
+                'master'       => array(
+                    'user'     => $dbUser,
+                    'password' => $dbPassword,
+                    'host'     => $masterIP,
+                    'dbname'   => $dbName
+                ),
+                'slaves'       => array(
+                    array(
+                        'user'     => $dbUser,
+                        'password' => $dbPassword,
+                        'host'     => $slaveIP,
+                        'dbname'   => $dbName
+                    )
+                )
+            )
+        );
+
+        return $connection;
+    }
+
+    /**
+     * @param $slaveConnection
+     */
+    private function fetchOrderFilesIdsFromSlave($slaveConnection)
+    {
+        $statement = $slaveConnection->query('SELECT OXID FROM oxorderfiles;');
+
+        return $statement->fetchAll();
+    }
 }
