@@ -5,7 +5,9 @@
 
 use Doctrine\DBAL\Connections\MasterSlaveConnection;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception\SyntaxErrorException;
 use OxidEsales\Eshop\Core\Db\oxDoctrineDatabase;
+use OxidEsales\Eshop\Core\LegacyDatabase;
 
 /**
  * @group dbal
@@ -147,6 +149,8 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
      */
     public function testMasterSlaveSetUp()
     {
+        $this->markTestSkipped('unskip, if you installed master/slave');
+
         $connection = $this->createMasterSlaveConnection();
 
         // we haven't connected to any of the mysql servers, the master shouldn't be connected yet
@@ -201,6 +205,24 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
 
         $orderFilesIds = $this->fetchOrderFilesIdsFromSlave($slaveConnection);
         $this->assertEmpty($orderFilesIds);
+    }
+
+    public function testDoctrineException()
+    {
+        try {
+            $this->connection->query('SELECT;', null);
+        } catch (SyntaxErrorException $e) {
+        }
+    }
+
+    public function testLegacyException()
+    {
+        try {
+
+            $db = oxDb::getDb();
+            $db->execute('SELECT;');
+        } catch (oxAdoDbException $e) {
+        }
     }
 
     /**
