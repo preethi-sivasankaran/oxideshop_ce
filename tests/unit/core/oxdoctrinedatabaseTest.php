@@ -149,7 +149,7 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
      */
     public function testMasterSlaveSetUp()
     {
-        $this->markTestSkipped('unskip, if you installed master/slave');
+        $this->markTestSkipped('You need to set up a mysql master/slave environment!');
 
         $connection = $this->createMasterSlaveConnection();
 
@@ -176,6 +176,8 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
      */
     public function testMasterSlaveWriteToConnectionAndCheckSlave()
     {
+        $this->markTestSkipped('You need to set up a mysql master/slave environment!');
+
         $connection = $this->testMasterSlaveSetUp();
 
         $slaveConnection = DriverManager::getConnection(
