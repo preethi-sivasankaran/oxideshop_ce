@@ -142,6 +142,40 @@ class Unit_Core_oxDoctrineDatabaseTest extends OxidTestCase
     }
 
     /**
+     * Extensive test to go at the edges of mysql. Put as many inserts into an transaction - and look what happens.
+     *
+     * Doctrine\DBAL\Exception\DriverException:
+     *  with Doctrine\DBAL\Driver\PDOException
+     *  with SQLSTATE[HY000]: General error: 1114 The table 'oxorderfiles' is full"
+     *
+     * And Fatal error: Out of memory (allocated 6399721472) (tried to allocate 536870912 bytes)
+     *
+     * with nearly 36 million inserts.
+     *
+     * But: mysql cares for the rollback and doctrine doesn't destroys the rollback.
+     */
+    public function testTransactionBulkRollbackedCorrect()
+    {
+        $this->markTestSkipped('It runs really long and ')
+        $this->deleteAddedOrderFiles();
+
+        $this->assertOriginalVendorIds();
+
+        $this->connection->startTransaction();
+        $i = 0;
+        try {
+            for ($i = 0; $i < 100000000; $i++) {
+                $this->connection->execute("INSERT INTO oxorderfiles(OXID) VALUES ('$i');", array());
+            }
+        } catch (Exception $e) {
+            var_dump($e,$i);
+        }
+
+        // assure, that the changes in the transaction aren't persisting - not called, but nice to stay here
+        $this->assertOriginalVendorIds();
+    }
+
+    /**
      * Test the setup of a doctrine master/slave connection.
      *
      * This test only runs, if you setup a master database on 33.33.33.30 and the fitting slave on 33.33.33.34
