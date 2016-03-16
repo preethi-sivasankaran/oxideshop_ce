@@ -462,66 +462,57 @@ class oxUtilsView extends oxSuperCfg
     }
 
     /**
-     * template blocks getter: retrieve sorted blocks for overriding in templates
+     * Template blocks getter: retrieve sorted blocks for overriding in templates
      *
-     * @param string $sFile filename of rendered template
+     * @param string $templateFileName filename of rendered template
      *
      * @see smarty_prefilter_oxblock
      *
      * @return array
      */
-    public function getTemplateBlocks($sFile)
+    public function getTemplateBlocks($templateFileName)
     {
-        $oConfig = $this->getConfig();
+        $templateBlocks = array();
+        $config = $this->getConfig();
 
-        $sTplDir = trim($oConfig->getConfigParam('_sTemplateDir'), '/\\');
-        $sFile = str_replace(array('\\', '//'), '/', $sFile);
-        if (preg_match('@/' . preg_quote($sTplDir, '@') . '/(.*)$@', $sFile, $m)) {
-            $sFile = $m[1];
+        $tplDir = trim($config->getConfigParam('_sTemplateDir'), '/\\');
+        $templateFileName = str_replace(array('\\', '//'), '/', $templateFileName);
+        if (preg_match('@/' . preg_quote($tplDir, '@') . '/(.*)$@', $templateFileName, $m)) {
+            $templateFileName = $m[1];
         }
 
-        $oDb = oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
-        $sFileParam = $oDb->quote($sFile);
-        $sShpIdParam = $oDb->quote($oConfig->getShopId());
-        $aRet = array();
-        $aIds = array();
+        $shopId = $config->getShopId();
 
-        if ($this->_blIsTplBlocks === null) {
-            $this->_blIsTplBlocks = false;
-            $aIds = $this->_getActiveModuleInfo();
-            if (count($aIds)) {
-                $sSql = "select COUNT(*) from oxtplblocks where oxactive=1 and oxshopid=$sShpIdParam and oxmodule in ( " . implode(", ", oxDb::getInstance()->quoteArray(array_keys($aIds))) . " ) ";
-                $rs = $oDb->getOne($sSql);
-                if ($rs) {
-                    $this->_blIsTplBlocks = true;
-                }
-            }
-        }
+        if ($this->activeModuleOverridesTemplate($shopId)) {
+            $ids = $this->_getActiveModuleInfo();
+            $modulesId2 = implode(", ", oxDb::getInstance()->quoteArray(array_keys($ids)));
+            $sql = "select *
+                    from oxtplblocks
+                    where oxactive=1
+                        and oxshopid=?
+                        and oxtemplate=?
+                        and oxmodule in ( " . $modulesId2 . " )
+                        order by oxpos asc";
+            $db = oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
+            $rs = $db->select($sql, array($shopId, $templateFileName));
 
-        if ($this->_blIsTplBlocks) {
-            $aIds = $this->_getActiveModuleInfo();
-            if (count($aIds)) {
-                $sSql = "select * from oxtplblocks where oxactive=1 and oxshopid=$sShpIdParam and oxtemplate=$sFileParam and oxmodule in ( " . implode(", ", oxDb::getInstance()->quoteArray(array_keys($aIds))) . " ) order by oxpos asc";
-                $oDb->setFetchMode(oxDb::FETCH_MODE_ASSOC);
-                $rs = $oDb->select($sSql);
-
-                if ($rs != false && $rs->recordCount() > 0) {
-                    while (!$rs->EOF) {
-                        try {
-                            if (!is_array($aRet[$rs->fields['OXBLOCKNAME']])) {
-                                $aRet[$rs->fields['OXBLOCKNAME']] = array();
-                            }
-                            $aRet[$rs->fields['OXBLOCKNAME']][] = $this->_getTemplateBlock($rs->fields['OXMODULE'], $rs->fields['OXFILE']);
-                        } catch (oxException $oE) {
-                            $oE->debugOut();
+            if ($rs != false && $rs->recordCount() > 0) {
+                while (!$rs->EOF) {
+                    try {
+                        if (!is_array($templateBlocks[$rs->fields['OXBLOCKNAME']])) {
+                            $templateBlocks[$rs->fields['OXBLOCKNAME']] = array();
                         }
-                        $rs->moveNext();
+                        $templateBlocks[$rs->fields['OXBLOCKNAME']][] = $this->_getTemplateBlock($rs->fields['OXMODULE'], $rs->fields['OXFILE']);
+                    } catch (oxException $exception) {
+                        $exception->debugOut();
                     }
+                    $rs->moveNext();
                 }
             }
+
         }
 
-        return $aRet;
+        return $templateBlocks;
     }
 
     /**
@@ -556,5 +547,44 @@ class oxUtilsView extends oxSuperCfg
         $fullThemePath = $themePath . $themeId . "/tpl/";
 
         return $fullThemePath;
+    }
+
+    /**
+     * Check if at least one of provided modules override at least one template.
+     * To win performance when:
+     * - no active modules exists.
+     * - none active module overrides template.
+     *
+     * @param $shopId shop id in which shop template should be overridden.
+     *
+     * @return bool
+     */
+    private function activeModuleOverridesTemplate($shopId)
+    {
+        if ($this->_blIsTplBlocks !== null) {
+            return $this->_blIsTplBlocks;
+        }
+
+        $moduleOverridesTemplate = false;
+
+        $ids = $this->_getActiveModuleInfo();
+        if (count($ids)) {
+            $db = oxDb::getDb(oxDb::FETCH_MODE_ASSOC);
+            $modulesId = implode(", ", oxDb::getInstance()->quoteArray(array_keys($ids)));
+            $sql = "select COUNT(*)
+                            from oxtplblocks
+                            where oxactive=1
+                                and oxshopid = ?
+                                and oxmodule in ( " . $modulesId . " )";
+            $rs = $db->getOne($sql, array($shopId));
+
+            if ($rs) {
+                $moduleOverridesTemplate = true;
+            }
+        }
+
+        $this->_blIsTplBlocks = $moduleOverridesTemplate;
+
+        return $moduleOverridesTemplate;
     }
 }
