@@ -238,26 +238,6 @@ class Integration_Price_BasketTest extends Integration_Price_BaseTestCase
             );
         }
 
-        // Trusted shop products costs
-        $expectedTrustedShops = $expected['totals']['trustedshop'];
-        if (!empty($expectedTrustedShops)) {
-            $this->assertEquals(
-                $expectedTrustedShops['brutto'],
-                number_format(round($basket->getTsProtectionCosts(), 2), 2, ',', '.'),
-                "Trusted shop total brutto price"
-            );
-            $this->assertEquals(
-                $expectedTrustedShops['netto'],
-                $basket->getTsProtectionNet(),
-                "Trusted shop total netto price"
-            );
-            $this->assertEquals(
-                $expectedTrustedShops['vat'],
-                $basket->getTsProtectionVat(),
-                "Trusted shop total vat price"
-            );
-        }
-
         // Vouchers
         $expectedVouchers = $expected['totals']['voucher'];
         if (!empty($expectedVouchers)) {
