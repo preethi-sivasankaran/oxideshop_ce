@@ -255,18 +255,6 @@ function editThis( sID )
                 <div class="spacer"></div>
             </dl>
 
-            <dl>
-                <dt>
-                    <input type=hidden name=confbools[blGBModerate] value=false>
-                    <input type=checkbox name=confbools[blGBModerate] value=true  [{if ($confbools.blGBModerate)}]checked[{/if}] [{$readonly}]>
-                    [{oxinputhelp ident="HELP_SHOP_SYSTEM_GBMODERATE"}]
-                </dt>
-                <dd>
-                    [{oxmultilang ident="SHOP_SYSTEM_GBMODERATE"}]
-                </dd>
-                <div class="spacer"></div>
-            </dl>
-
             [{include file="include/ldap_options.tpl"}]
 
             <dl>
