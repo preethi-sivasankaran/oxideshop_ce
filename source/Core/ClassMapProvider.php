@@ -41,14 +41,14 @@ class ClassMapProvider
     /** @var array */
     private $overridableClassMap = array();
 
-    /** @var EnterpriseClassMap */
-    private $enterpriseClassMap;
+    /** @var CommunityClassMap */
+    private $communityClassMap;
 
     /** @var ProfessionalClassMap */
     private $professionalClassMap;
 
-    /** @var CommunityClassMap */
-    private $communityClassMap;
+    /** @var EnterpriseClassMap */
+    private $enterpriseClassMap;
 
     /**
      * Sets edition selector object.
@@ -58,6 +58,14 @@ class ClassMapProvider
     public function __construct($editionSelector)
     {
         $this->editionSelector = $editionSelector;
+    }
+
+    /**
+     * @param CommunityClassMap $classMap
+     */
+    public function setClassMapCommunity($classMap)
+    {
+        $this->communityClassMap = $classMap;
     }
 
     /**
@@ -74,14 +82,6 @@ class ClassMapProvider
     public function setClassMapEnterprise($classMap)
     {
         $this->enterpriseClassMap = $classMap;
-    }
-
-    /**
-     * @param CommunityClassMap $classMap
-     */
-    public function setClassMapCommunity($classMap)
-    {
-        $this->communityClassMap = $classMap;
     }
 
     /**
