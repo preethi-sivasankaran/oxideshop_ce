@@ -25,6 +25,7 @@ namespace OxidEsales\Eshop\Core;
 use OxidEsales\Eshop\Core\Edition\EditionSelector;
 use OxidEsales\EshopEnterprise\ClassMap as EnterpriseClassMap;
 use OxidEsales\EshopProfessional\ClassMap as ProfessionalClassMap;
+use OxidEsales\Eshop\Core\ClassMap as CommunityClassMap;
 
 /**
  * Class responsible for returning class map by edition.
@@ -45,6 +46,9 @@ class ClassMapProvider
 
     /** @var ProfessionalClassMap */
     private $professionalClassMap;
+
+    /** @var CommunityClassMap */
+    private $communityClassMap;
 
     /**
      * Sets edition selector object.
@@ -70,6 +74,14 @@ class ClassMapProvider
     public function setClassMapEnterprise($classMap)
     {
         $this->enterpriseClassMap = $classMap;
+    }
+
+    /**
+     * @param CommunityClassMap $classMap
+     */
+    public function setClassMapCommunity($classMap)
+    {
+        $this->communityClassMap = $classMap;
     }
 
     /**
@@ -105,15 +117,17 @@ class ClassMapProvider
      */
     protected function formClassMaps()
     {
-        $overridableMap = array();
-        $notOverridableMap = array();
         $editionSelector = $this->getEditionSelector();
+        $classMapCommunity = $this->getClassMapCommunity();
+        $overridableMap = $classMapCommunity->getOverridableMap();
+        $notOverridableMap = $classMapCommunity->getNotOverridableMap();
+
         if ($editionSelector->getEdition() === EditionSelector::ENTERPRISE
             || $editionSelector->getEdition() === EditionSelector::PROFESSIONAL
         ) {
             $classMapProfessional = $this->getClassMapProfessional();
-            $overridableMap = $classMapProfessional->getOverridableMap();
-            $notOverridableMap = $classMapProfessional->getNotOverridableMap();
+            $overridableMap = array_merge($overridableMap, $classMapProfessional->getOverridableMap());
+            $notOverridableMap = array_merge($notOverridableMap, $classMapProfessional->getNotOverridableMap());
         }
 
         if ($editionSelector->getEdition() === EditionSelector::ENTERPRISE) {
@@ -124,6 +138,20 @@ class ClassMapProvider
 
         $this->overridableClassMap = $overridableMap;
         $this->notOverridableClassMap = $notOverridableMap;
+    }
+
+    /**
+     * Method is responsible for providing class map object.
+     *
+     * @return CommunityClassMap
+     */
+    protected function getClassMapCommunity()
+    {
+        if (is_null($this->communityClassMap)) {
+            $this->communityClassMap = new CommunityClassMap();
+        }
+
+        return $this->communityClassMap;
     }
 
     /**
