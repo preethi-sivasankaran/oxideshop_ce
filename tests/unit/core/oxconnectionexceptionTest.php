@@ -44,14 +44,13 @@ class Unit_Core_oxconnectionexceptionTest extends OxidTestCase
     {
         $sMsg = 'Erik was here..';
         $oTestObject = oxNew('oxConnectionException', $sMsg);
-        $this->assertEquals('oxConnectionException', get_class($oTestObject));
         $sAddress = 'sServerAddress';
         $oTestObject->setAdress($sAddress);
         $sConnectionError = 'sSomeConnectionError';
         $oTestObject->setConnectionError($sConnectionError);
         $sStringOut = $oTestObject->getString();
         $this->assertContains($sMsg, $sStringOut); // Message
-        $this->assertContains('oxConnectionException', $sStringOut); // Exception class name
+        $this->assertContains('ConnectionException', $sStringOut); // Exception class name
         $this->assertContains($sAddress, $sStringOut); // Server Address
         $this->assertContains($sConnectionError, $sStringOut); // Connection error
     }

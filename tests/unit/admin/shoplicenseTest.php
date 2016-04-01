@@ -20,6 +20,8 @@
  * @version   OXID eShop CE
  */
 
+use OxidEsales\Eshop\Core\Exception\SystemComponentException;
+
 /**
  * Tests for Shop_License class
  */
