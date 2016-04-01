@@ -91,6 +91,13 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             'oxsystemcomponentexception' => '\OxidEsales\Eshop\Core\Exception\SystemComponentException',
             'oxconfigfile' => '\OxidEsales\Eshop\Core\ConfigFile',
             'oxregistry' => '\OxidEsales\Eshop\Core\Registry',
+            'oxstart' => '\OxidEsales\Eshop\Application\Controller\OxidStartController',
+            'dyn_interface' => '\OxidEsales\Eshop\Application\Controller\Admin\DynamicInterface',
+            'dyn_screen' => '\OxidEsales\Eshop\Application\Controller\Admin\DynamicScreen',
+            'dynexportbase' => '\OxidEsales\Eshop\Application\Controller\Admin\DynamicExportBase',
+            'genimport_main' => '\OxidEsales\Eshop\Application\Controller\Admin\GenericImportMainController',
+            'object_seo' => '\OxidEsales\Eshop\Application\Controller\Admin\ObjectSeoController',
+            'shop_config' => '\OxidEsales\Eshop\Application\Controller\Admin\ShopConfigController',
 
         );
     }

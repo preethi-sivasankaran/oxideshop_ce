@@ -20,23 +20,11 @@
  * @version   OXID eShop CE
  */
 
-namespace OxidEsales\Eshop\Application\Controller\Admin;
-
 /**
- * Admin dyn manager.
+ * This class must be empty because of others eShop editions classes which can be used instead of it.
  *
- * @subpackage dyn
+ * @deprecated on b-dev This class should not be used for direct extending. Please use parent class instead.
  */
-class DynamicInterface extends \oxAdminDetails
+class object_seo extends \OxidEsales\Eshop\Application\Controller\Admin\ObjectSeoController
 {
-
-    /**
-     * Returns view id
-     *
-     * @return string
-     */
-    public function getViewId()
-    {
-        return 'dyn_interface';
-    }
 }
