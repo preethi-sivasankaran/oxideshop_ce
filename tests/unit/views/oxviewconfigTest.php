@@ -615,7 +615,7 @@ class Unit_Views_oxviewConfigTest extends OxidTestCase
         $config->setConfigParam("sShopDir", $fakeShopDirectory);
 
         $message = "Requested file not found for module test1 (" . $fakeShopDirectory . "modules/test1/out/blocks/non_existing_template.tpl)";
-        $this->setExpectedException('oxFileException', $message);
+        $this->setExpectedException('\OxidEsales\Eshop\Core\Exception\FileException', $message);
 
         /** @var oxViewConfig|PHPUnit_Framework_MockObject_MockObject $viewConfig */
         $viewConfig = $this->getMock('oxViewConfig', array('getConfig'));
@@ -2497,7 +2497,7 @@ class Unit_Views_oxviewConfigTest extends OxidTestCase
         $this->setConfigParam('aModules', $aModules);
         $this->setConfigParam('aDisabledModules', $aDisabledModules);
         $this->setConfigParam('aModuleVersions', $aModuleVersions);
-        
+
         $oViewConf = oxNew('oxViewConfig');
         $blIsModuleActive = $oViewConf->isModuleActive($sModuleId);
 

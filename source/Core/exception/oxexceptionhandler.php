@@ -16,21 +16,15 @@
  * along with OXID eShop Community Edition.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @link      http://www.oxid-esales.com
- * @copyright (C) OXID eSales AG 2003-2015
+ * @copyright (C) OXID eSales AG 2003-2016
  * @version   OXID eShop CE
  */
 
-class Unit_Core_oxuserexceptionTest extends OxidTestCase
+/**
+ * This class must be empty because of others eShop editions classes which can be used instead of it.
+ *
+ * @deprecated on b-dev This class should not be used for direct extending. Please use parent class instead.
+ */
+class oxExceptionHandler extends \OxidEsales\Eshop\Core\Exception\ExceptionHandler
 {
-
-    // We check on class name (exception class) and message only - rest is not checked yet
-    public function testGetString()
-    {
-        $sMsg = 'Erik was here..';
-        $oTestObject = oxNew('oxUserException', $sMsg);
-        $this->assertEquals('OxidEsales\Eshop\Core\Exception\UserException', get_class($oTestObject));
-        $sStringOut = $oTestObject->getString(); // (string)$oTestObject; is not PHP 5.2 compatible (__toString() for string convertion is PHP >= 5.2
-        $this->assertContains($sMsg, $sStringOut);
-        $this->assertContains('UserException', $sStringOut);
-    }
 }

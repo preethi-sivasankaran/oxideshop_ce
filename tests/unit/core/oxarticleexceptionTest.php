@@ -81,7 +81,7 @@ class Unit_Core_oxarticleexceptionTest extends OxidTestCase
      */
     public function testType()
     {
-        $this->assertEquals('oxArticleException', get_class($this->_oTestObject));
+        $this->assertEquals('OxidEsales\Eshop\Core\Exception\ArticleException', get_class($this->_oTestObject));
     }
 
     /**
@@ -105,7 +105,7 @@ class Unit_Core_oxarticleexceptionTest extends OxidTestCase
     {
         $sStringOut = $this->_oTestObject->getString();
         $this->assertContains($this->_sMsg, $sStringOut); // Message
-        $this->assertContains('oxArticleException', $sStringOut); // Exception class name
+        $this->assertContains('ArticleException', $sStringOut); // Exception class name
         $this->assertContains($this->_sArticle, $sStringOut); // Article nr
     }
 

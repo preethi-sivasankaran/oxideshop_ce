@@ -20,12 +20,14 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Core\Exception;
+
 /**
  * exception class for all kind of exceptions connected to a user e.g.:
  * - user doesn't exist
  * - wrong password
  */
-class oxUserException extends oxException
+class UserException extends \oxException
 {
 
     /**

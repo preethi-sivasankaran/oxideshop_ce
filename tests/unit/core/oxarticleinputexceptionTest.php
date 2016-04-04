@@ -37,12 +37,12 @@ class Unit_Core_oxarticleinputexceptionTest extends OxidTestCase
     {
         $sMsg = 'Erik was here..';
         $oTestObject = oxNew('oxArticleInputException', $sMsg);
-        $this->assertEquals('oxArticleInputException', get_class($oTestObject));
+        $this->assertEquals('OxidEsales\Eshop\Core\Exception\ArticleInputException', get_class($oTestObject));
         $sArticle = 'sArticleNumber';
         $oTestObject->setArticleNr($sArticle);
         $sStringOut = $oTestObject->getString();
         $this->assertContains($sMsg, $sStringOut); // Message
-        $this->assertContains('oxArticleInputException', $sStringOut); // Exception class name
+        $this->assertContains('ArticleInputException', $sStringOut); // Exception class name
         $this->assertContains($sArticle, $sStringOut); // Article nr
     }
 }

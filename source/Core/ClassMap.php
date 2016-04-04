@@ -99,6 +99,22 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             'object_seo' => '\OxidEsales\Eshop\Application\Controller\Admin\ObjectSeoController',
             'shop_config' => '\OxidEsales\Eshop\Application\Controller\Admin\ShopConfigController',
 
+            'oxvoucherexception' => '\OxidEsales\Eshop\Core\Exception\VoucherException',
+            'oxuserexception' => '\OxidEsales\Eshop\Core\Exception\UserException',
+            'oxshopexception' => '\OxidEsales\Eshop\Core\Exception\ShopException',
+            'oxoutofstockexception' => '\OxidEsales\Eshop\Core\Exception\OutOfStockException',
+            'oxobjectexception' => '\OxidEsales\Eshop\Core\Exception\ObjectException',
+            'oxnoarticleexception' => '\OxidEsales\Eshop\Core\Exception\NoArticleException',
+            'oxinputexception' => '\OxidEsales\Eshop\Core\Exception\InputException',
+            'oxfileexception' => '\OxidEsales\Eshop\Core\Exception\FileException',
+            'oxexceptionhandler' => '\OxidEsales\Eshop\Core\Exception\ExceptionHandler',
+            'oxexception' => '\OxidEsales\Eshop\Core\Exception\StandardException',
+            'oxcookieexception' => '\OxidEsales\Eshop\Core\Exception\CookieException',
+            'oxarticleinputexception' => '\OxidEsales\Eshop\Core\Exception\ArticleInputException',
+            'oxarticleexception' => '\OxidEsales\Eshop\Core\Exception\ArticleException',
+            'oxadodbexception' => '\OxidEsales\Eshop\Core\Exception\AdodbException',
+            'oxlanguageexception' => '\OxidEsales\Eshop\Core\Exception\LanguageException',
+
         );
     }
 }

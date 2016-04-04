@@ -2604,7 +2604,7 @@ class Unit_Models_oxorderTest extends OxidTestCase
             $oOrder->validateStock($oBasket);
         } catch (Exception $e) {
             // OK
-            $this->assertEquals('oxOutOfStockException', get_class($e));
+            $this->assertTrue(is_a($e, 'oxOutOfStockException'));
             $this->assertEquals(5, $e->getRemainingAmount());
 
             return;
@@ -2637,7 +2637,7 @@ class Unit_Models_oxorderTest extends OxidTestCase
             $oOrder->validateStock($oBasket);
         } catch (Exception $e) {
             // OK
-            $this->assertEquals('oxNoArticleException', get_class($e));
+            $this->assertTrue(is_a($e, 'oxNoArticleException'));
 
             return;
         }
@@ -2669,7 +2669,7 @@ class Unit_Models_oxorderTest extends OxidTestCase
             $oOrder->validateStock($oBasket);
         } catch (Exception $e) {
             // OK
-            $this->assertEquals('oxArticleInputException', get_class($e));
+            $this->assertTrue(is_a($e, 'oxArticleInputException'));
 
             return;
         }

@@ -36,7 +36,7 @@ class Unit_Core_oxlanguageexceptionTest extends OxidTestCase
     {
         parent::setUp();
         $this->_oTestObject = oxNew('oxLanguageException', $this->_sMsg);
-        $this->assertEquals('oxLanguageException', get_class($this->_oTestObject));
+        $this->assertEquals('OxidEsales\Eshop\Core\Exception\LanguageException', get_class($this->_oTestObject));
         $this->_oTestObject->setLangConstant($this->_sLanguageConstant);
     }
 
@@ -50,7 +50,7 @@ class Unit_Core_oxlanguageexceptionTest extends OxidTestCase
     {
         $sStringOut = $this->_oTestObject->getString();
         $this->assertContains($this->_sMsg, $sStringOut); // Message
-        $this->assertContains('oxLanguageException', $sStringOut); // Exception class name
+        $this->assertContains('LanguageException', $sStringOut); // Exception class name
         $this->assertContains($this->_sLanguageConstant, $sStringOut); // Language constant
     }
 

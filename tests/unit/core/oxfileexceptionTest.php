@@ -37,7 +37,7 @@ class Unit_Core_oxfileexceptionTest extends OxidTestCase
     {
         parent::setUp();
         $this->_oTestObject = oxNew('oxFileException', $this->_sMsg);
-        $this->assertEquals('oxFileException', get_class($this->_oTestObject));
+        $this->assertEquals('OxidEsales\Eshop\Core\Exception\FileException', get_class($this->_oTestObject));
         $this->_oTestObject->setFileName($this->_sFileName);
         $this->_oTestObject->setFileError($this->_sFileError);
     }
@@ -57,7 +57,7 @@ class Unit_Core_oxfileexceptionTest extends OxidTestCase
     {
         $sStringOut = $this->_oTestObject->getString();
         $this->assertContains($this->_sMsg, $sStringOut); // Message
-        $this->assertContains('oxFileException', $sStringOut); // Exception class name
+        $this->assertContains('FileException', $sStringOut); // Exception class name
         $this->assertContains($this->_sFileName, $sStringOut); // File name
         $this->assertContains($this->_sFileError, $sStringOut); // File error
     }
