@@ -122,4 +122,14 @@ class Unit_Core_oxarticleexceptionTest extends OxidTestCase
         $this->assertTrue($this->_sArticle === $aRes['articleNr']);
         $this->assertTrue($this->_sArticle === $aRes['productId']);
     }
+
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxArticleException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
 }

@@ -54,4 +54,14 @@ class Unit_Core_oxSystemComponentExceptionTest extends OxidTestCase
         $this->assertArrayHasKey('component', $aRes);
         $this->assertTrue($sComponent === $aRes['component']);
     }
+
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxSystemComponentException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
 }

@@ -46,4 +46,14 @@ class Unit_Core_oxobjectexceptionTest extends OxidTestCase
         $this->assertContains('ObjectException', $sStringOut);
         $this->assertContains(get_class($oObject), $sStringOut);
     }
+
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxObjectException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
 }

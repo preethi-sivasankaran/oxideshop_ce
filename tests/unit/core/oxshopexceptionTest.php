@@ -33,4 +33,14 @@ class Unit_Core_oxshopexceptionTest extends OxidTestCase
         $this->assertContains($sMsg, $sStringOut);
         $this->assertContains('ShopException', $sStringOut);
     }
+
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxShopException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
 }

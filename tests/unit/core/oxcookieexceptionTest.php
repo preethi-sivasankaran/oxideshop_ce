@@ -33,4 +33,14 @@ class Unit_Core_oxcookieexceptionTest extends OxidTestCase
         $this->assertContains($sMsg, $sStringOut); // Message
         $this->assertContains('CookieException', $sStringOut); // Exception class name
     }
+
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxCookieException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
 }

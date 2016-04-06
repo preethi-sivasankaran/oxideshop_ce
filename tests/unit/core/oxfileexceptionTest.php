@@ -68,4 +68,14 @@ class Unit_Core_oxfileexceptionTest extends OxidTestCase
         $this->assertArrayHasKey('fileName', $aRes);
         $this->assertTrue($this->_sFileName === $aRes['fileName']);
     }
+
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxFileException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
 }

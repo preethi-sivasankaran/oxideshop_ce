@@ -72,4 +72,14 @@ class Unit_Core_oxoutofstockexceptionTest extends OxidTestCase
         $this->assertTrue($this->_sBasketIndex === $aRes['basketIndex']);
     }
 
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxOutOfStockException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
+
 }

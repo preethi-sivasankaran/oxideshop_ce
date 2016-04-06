@@ -68,4 +68,14 @@ class Unit_Core_oxconnectionexceptionTest extends OxidTestCase
         $this->assertArrayHasKey('connectionError', $aRes);
         $this->assertTrue($sConnectionError === $aRes['connectionError']);
     }
+
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxConnectionException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
 }

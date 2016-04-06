@@ -31,4 +31,14 @@ class Unit_Core_oxinputexceptionTest extends OxidTestCase
         $sStringOut = $oTestObject->getString(); // (string)$oTestObject; is not PHP 5.2 compatible (__toString() for string convertion is PHP >= 5.2
         $this->assertContains('InputException', $sStringOut);
     }
+
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxInputException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
 }

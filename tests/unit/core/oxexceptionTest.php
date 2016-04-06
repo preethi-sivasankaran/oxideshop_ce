@@ -144,4 +144,14 @@ class Unit_Core_oxexceptionTest extends OxidTestCase
         $aRes = $oTestObject->getValues();
         $this->assertEquals(0, count($aRes));
     }
+
+    /**
+     * Test type getter.
+     */
+    public function testGetType()
+    {
+        $class = 'oxException';
+        $exception = oxNew($class);
+        $this->assertSame($class, $exception->getType());
+    }
 }
