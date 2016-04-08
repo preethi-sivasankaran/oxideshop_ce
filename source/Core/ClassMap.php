@@ -37,6 +37,8 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             'oxApplicationServer' => '\OxidEsales\Eshop\Core\ApplicationServer',
             'oxCcValidator' => '\OxidEsales\Eshop\Core\CreditCardValidator',
 
+            'language' => '\OxidEsales\Eshop\Application\Controller\Admin\LanguageController',
+
             'oxcompanyvatinchecker' =>'\OxidEsales\Eshop\Core\CompanyVatInChecker',
             'oxcompanyvatincountrychecker' =>'\OxidEsales\Eshop\Core\CompanyVatInCountryChecker',
             'oxcompanyvatinvalidator' =>'\OxidEsales\Eshop\Core\CompanyVatInValidator',

@@ -20,20 +20,12 @@
  * @version   OXID eShop CE
  */
 
-namespace OxidEsales\Eshop\Application\Controller\Admin;
-
 /**
- * Sets template, that arranges two other templates ("article_list.tpl"
- * and "article_main.tpl") to frame.
- * Admin Menu: Manage Products -> Articles.
+ * This class must be empty because of others eShop editions classes which can be used instead of it.
+ *
+ * @deprecated on b-dev This class should not be used for direct extending. Please use parent class instead.
+ *
  */
-class LanguageController extends \oxAdminView
+class Language extends \OxidEsales\Eshop\Application\Controller\Admin\LanguageController
 {
-
-    /**
-     * Current class template name.
-     *
-     * @var string
-     */
-    protected $_sThisTemplate = 'language.tpl';
 }
