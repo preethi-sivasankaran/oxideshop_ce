@@ -57,21 +57,16 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             'oxheader' =>'\OxidEsales\Eshop\Core\Header',
             'oxinputvalidator' =>'\OxidEsales\Eshop\Core\InputValidator',
             'oxlang' =>'\OxidEsales\Eshop\Core\Language',
-            'oxmodule' =>'\OxidEsales\Eshop\Core\Module',
-            'oxmodulecache' =>'\OxidEsales\Eshop\Core\ModuleCache',
             'oxmodulechainsgenerator' =>'\OxidEsales\Eshop\Core\ModuleChainsGenerator',
 
+            'oxmodulefilesvalidator' =>'\OxidEsales\Eshop\Core\ModuleFilesValidator',
+            'oxmoduleinstaller' =>'\OxidEsales\Eshop\Core\ModuleInstaller',
+            'oxmodulelist' =>'\OxidEsales\Eshop\Core\ModuleList',
+            'oxmodulemetadataagainstshopvalidator' =>'\OxidEsales\Eshop\Core\ModuleMetadataAgainstShopValidator',
+            'oxmodulemetadatavalidator' =>'\OxidEsales\Eshop\Core\ModuleMetadataValidator',
+            'oxmodulevalidatorfactory' =>'\OxidEsales\Eshop\Core\ModuleValidatorFactory',
+            'oxmodulevariableslocator' =>'\OxidEsales\Eshop\Core\ModuleVariablesLocator',
 
-            ###'oxconfk' =>'\OxidEsales\Eshop\Core\ConfigurationKey',
-            ###'oxfunctions' =>'\OxidEsales\Eshop\Core\Functions',
-            ###'oxid' =>'\OxidEsales\Eshop\Core\Oxid',
-            #'oxmodulefilesvalidator' =>'\OxidEsales\Eshop\Core\',
-            #'oxmoduleinstaller' =>'\OxidEsales\Eshop\Core\',
-            #'oxmodulelist' =>'\OxidEsales\Eshop\Core\',
-            #'oxmodulemetadataagainstshopvalidator' =>'\OxidEsales\Eshop\Core\',
-            #'oxmodulemetadatavalidator' =>'\OxidEsales\Eshop\Core\',
-            #'oxmodulevalidatorfactory' =>'\OxidEsales\Eshop\Core\',
-            #'oxmodulevariableslocator' =>'\OxidEsales\Eshop\Core\',
             #'oxnojsvalidator' =>'\OxidEsales\Eshop\Core\',
             #'oxonlinecaller' =>'\OxidEsales\Eshop\Core\',
             #'oxonlinelicensecheck' =>'\OxidEsales\Eshop\Core\',
@@ -126,6 +121,10 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             #'oxwidgetcontrol' =>'\OxidEsales\Eshop\Core\',
 
 
+
+            ###'oxconfk' =>'\OxidEsales\Eshop\Core\ConfigurationKey',
+            ###'oxfunctions' =>'\OxidEsales\Eshop\Core\Functions',
+            ###'oxid' =>'\OxidEsales\Eshop\Core\Oxid',
         );
     }
 
@@ -204,6 +203,8 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             'oxadodbexception' => '\OxidEsales\Eshop\Core\Exception\AdodbException',
             'oxlanguageexception' => '\OxidEsales\Eshop\Core\Exception\LanguageException',
 
+            'oxmodule' =>'\OxidEsales\Eshop\Core\Module',
+            'oxmodulecache' =>'\OxidEsales\Eshop\Core\ModuleCache',
         );
     }
 }
