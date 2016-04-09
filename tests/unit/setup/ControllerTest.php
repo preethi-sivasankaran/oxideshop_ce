@@ -25,6 +25,7 @@ use OxidEsales\Eshop\Setup\Controller;
 use OxidEsales\Eshop\Setup\Core;
 use OxidEsales\Eshop\Setup\Database;
 use OxidEsales\Eshop\Setup\View;
+use OxidEsales\Eshop\Setup\Session as SetupSession;
 
 /**
  * controller tests
@@ -36,7 +37,7 @@ class ControllerTest extends OxidTestCase
      */
     public function testGetView()
     {
-        
+
         /** @var Controller $oController */
         $oController = $this->getController();
         $this->assertTrue($oController->getView() instanceof View);
@@ -70,7 +71,7 @@ class ControllerTest extends OxidTestCase
         $oUtils->expects($this->once())->method("extractRewriteBase")->with($this->equalTo('sShopURL'))->will($this->returnValue("sBaseUrlPath"));
         $oUtils->expects($this->once())->method("updateHtaccessFile");
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Language"))->will($this->returnValue($oLang));
@@ -87,7 +88,7 @@ class ControllerTest extends OxidTestCase
      */
     public function testWelcome()
     {
-        $oSession = $this->getMock('OxidEsales\Eshop\Setup\Session', array("getSessionParam", '_startSession'), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam", '_startSession'), array(), '', null);
         $oSession->expects($this->at(0))->method("getSessionParam")->will($this->returnValue("en"));
         $oSession->expects($this->at(1))->method("getSessionParam")->will($this->returnValue("de"));
         $oSession->expects($this->any())->method("_startSession");
@@ -108,7 +109,7 @@ class ControllerTest extends OxidTestCase
         $oLang = $this->getMock('OxidEsales\Eshop\Setup\Language', array("getLanguage"));
         $oLang->expects($this->once())->method("getLanguage")->will($this->returnValue("oxidadminlanguage"));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Utilities"))->will($this->returnValue($oUtils));
@@ -135,7 +136,7 @@ class ControllerTest extends OxidTestCase
         $oLang->expects($this->once())->method("getLanguage")->will($this->returnValue("contents"));
 
         $iAt = 0;
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at($iAt++))->method("getView")->will($this->returnValue($oView));
         $oController->expects($this->at($iAt++))->method("getInstance")->with($this->equalTo("Utilities"))->will($this->returnValue($oUtils));
@@ -157,7 +158,7 @@ class ControllerTest extends OxidTestCase
         $oSetup->expects($this->once())->method("getStep")->with($this->equalTo("STEP_WELCOME"));
         $oSetup->expects($this->once())->method("setNextStep");
 
-        $oSession = $this->getMock("Session", array("getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam"), array(), '', null);
         $oSession->expects($this->once())->method("getSessionParam")->will($this->returnValue(false));
 
         $oLang = $this->getMock("Language", array("getText"));
@@ -166,7 +167,7 @@ class ControllerTest extends OxidTestCase
         $oUtils = $this->getMock("Utilities", array("getRequestVar"));
         $oUtils->expects($this->any())->method("getRequestVar")->will($this->returnValue(false));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getView")->will($this->returnValue($oView));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -189,14 +190,14 @@ class ControllerTest extends OxidTestCase
         $oView->expects($this->at(2))->method("setViewParam")->with($this->equalTo('blMbStringOn'));
         $oView->expects($this->at(3))->method("setViewParam")->with($this->equalTo('blUnicodeSupport'));
 
-        $oSession = $this->getMock("Session", array("getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam"), array(), '', null);
         $oSession->expects($this->at(0))->method("getSessionParam")->will($this->returnValue(true));
         $oSession->expects($this->at(1))->method("getSessionParam")->will($this->returnValue(null));
 
         $oUtils = $this->getMock("Utilities", array("getRequestVar"));
         $oUtils->expects($this->any())->method("getRequestVar")->will($this->returnValue(false));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getView")->will($this->returnValue($oView));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -217,14 +218,14 @@ class ControllerTest extends OxidTestCase
         $oView->expects($this->at(2))->method("setViewParam")->with($this->equalTo('aAdminData'));
         $oView->expects($this->at(3))->method("setViewParam")->with($this->equalTo('aPath'));
 
-        $oSession = $this->getMock("Session", array("getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam"), array(), '', null);
         $oSession->expects($this->at(0))->method("getSessionParam")->with($this->equalTo("aSetupConfig"));
         $oSession->expects($this->at(1))->method("getSessionParam")->with($this->equalTo("aAdminData"));
 
         $oUtils = $this->getMock("Utilities", array("getDefaultPathParams"));
         $oUtils->expects($this->once())->method("getDefaultPathParams");
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
         $oController->expects($this->at(1))->method("getView")->will($this->returnValue($oView));
@@ -246,7 +247,7 @@ class ControllerTest extends OxidTestCase
         $oLang = $this->getMock("Language", array("getText"));
         $oLang->expects($this->once())->method("getText")->with($this->equalTo("ERROR_FILL_ALL_FIELDS"));
 
-        $oSession = $this->getMock("Session", array("setSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("setSessionParam"), array(), '', null);
         $oSession->expects($this->once())->method("setSessionParam")->with($this->equalTo("aDB"));
 
         $oSetup = $this->getMock("Setup", array("setNextStep", "getStep"));
@@ -256,7 +257,7 @@ class ControllerTest extends OxidTestCase
         $oUtils = $this->getMock("Utilities", array("getRequestVar"));
         $oUtils->expects($this->any())->method("getRequestVar")->will($this->returnValue(false));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -280,7 +281,7 @@ class ControllerTest extends OxidTestCase
         $oLang = $this->getMock("Language", array("getText"));
         $oLang->expects($this->once())->method("getText")->with($this->equalTo("ERROR_DB_CONNECT"));
 
-        $oSession = $this->getMock("Session", array("setSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("setSessionParam"), array(), '', null);
         $oSession->expects($this->once())->method("setSessionParam")->with($this->equalTo("aDB"));
 
         $oSetup = $this->getMock("Setup", array("setNextStep", "getStep"));
@@ -293,7 +294,7 @@ class ControllerTest extends OxidTestCase
         $oDb = $this->getMock('OxidEsales\Eshop\Setup\Database', array("openDatabase"));
         $oDb->expects($this->once())->method("openDatabase")->will($this->throwException(new Exception("", Database::ERROR_DB_CONNECT)));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -315,7 +316,7 @@ class ControllerTest extends OxidTestCase
         $oView->expects($this->once())->method("setTitle")->with($this->equalTo("STEP_3_1_TITLE"));
         $oView->expects($this->once())->method("setMessage");
 
-        $oSession = $this->getMock("Session", array("setSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("setSessionParam"), array(), '', null);
         $oSession->expects($this->once())->method("setSessionParam")->with($this->equalTo("aDB"));
 
         $oSetup = $this->getMock("Setup", array("setNextStep", "getStep"));
@@ -329,7 +330,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->once())->method("openDatabase")->will($this->throwException(new Exception("")));
         $oDb->expects($this->once())->method("createDb")->will($this->throwException(new Exception("")));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -352,7 +353,7 @@ class ControllerTest extends OxidTestCase
         $oView->expects($this->at(1))->method("setViewParam")->with($this->equalTo("blCreated"));
         $oView->expects($this->at(2))->method("setViewParam")->with($this->equalTo("aDB"));
 
-        $oSession = $this->getMock("Session", array("setSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("setSessionParam"), array(), '', null);
         $oSession->expects($this->once())->method("setSessionParam")->with($this->equalTo("aDB"));
 
         $oSetup = $this->getMock("Setup", array("setNextStep", "getStep"));
@@ -366,7 +367,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->once())->method("openDatabase")->will($this->throwException(new Exception("")));
         $oDb->expects($this->once())->method("createDb");
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -387,7 +388,7 @@ class ControllerTest extends OxidTestCase
         $oSetup = $this->getMock("Setup", array("setNextStep", "getStep"));
         $oSetup->expects($this->once())->method("getStep")->with($this->equalTo("STEP_DB_CREATE"));
 
-        $oSession = $this->getMock("Session", array("getSessionParam", "getSid"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam", "getSid"), array(), '', null);
         $oSession->expects($this->once())->method("getSessionParam")->with($this->equalTo("aDB"));
         $oSession->expects($this->once())->method("getSid");
 
@@ -406,7 +407,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->once())->method("execSql");
         $oDb->expects($this->once())->method("testCreateView");
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -426,7 +427,7 @@ class ControllerTest extends OxidTestCase
     {
         $oSetup = $this->getMock("Setup");
 
-        $oSession = $this->getMock("Session", array("getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam"), array(), '', null);
         $oSession->expects($this->once())->method("getSessionParam")->with($this->equalTo("aDB"));
 
         $oView = $this->getMock("viewStub", array("setTitle", "setMessage"));
@@ -443,7 +444,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->once())->method("queryFile")->will($this->throwException(new Exception));
         $oDb->expects($this->once())->method("testCreateView");
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -463,7 +464,7 @@ class ControllerTest extends OxidTestCase
     {
         $oSetup = $this->getMock("Setup");
 
-        $oSession = $this->getMock("Session", array("getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam"), array(), '', null);
         $oSession->expects($this->once())->method("getSessionParam")->with($this->equalTo("aDB"))->will($this->returnValue(array("dbiDemoData" => 1)));
 
         $oView = $this->getMock("viewStub", array("setTitle", "setMessage"));
@@ -484,7 +485,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->at(4))->method("queryFile");
         $oDb->expects($this->at(5))->method("queryFile")->will($this->throwException(new Exception));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -504,7 +505,7 @@ class ControllerTest extends OxidTestCase
     {
         $oSetup = $this->getMock("Setup");
 
-        $oSession = $this->getMock("Session", array("getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam"), array(), '', null);
         $oSession->expects($this->at(0))->method("getSessionParam")->with($this->equalTo("aDB"))->will($this->returnValue(array("dbiDemoData" => 1)));
         $oSession->expects($this->at(1))->method("getSessionParam")->with($this->equalTo("location_lang"))->will($this->returnValue("en"));
 
@@ -527,7 +528,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->at(5))->method("queryFile");
         $oDb->expects($this->at(6))->method("queryFile")->will($this->throwException(new Exception));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -549,7 +550,7 @@ class ControllerTest extends OxidTestCase
         $oSetup->expects($this->once())->method("setNextStep");
         $oSetup->expects($this->once())->method("getStep");
 
-        $oSession = $this->getMock("Session", array("getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam"), array(), '', null);
         $oSession->expects($this->at(0))->method("getSessionParam")->with($this->equalTo("aDB"))->will($this->returnValue(array("dbiDemoData" => 1)));
 
         $oView = $this->getMock("viewStub", array("setTitle", "setMessage"));
@@ -563,7 +564,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->at(0))->method("openDatabase");
         $oDb->expects($this->at(1))->method("testCreateView")->will($this->throwException(new Exception));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -585,7 +586,7 @@ class ControllerTest extends OxidTestCase
         $oSetup->expects($this->once())->method("setNextStep");
         $oSetup->expects($this->once())->method("getStep")->with($this->equalTo('STEP_DIRS_INFO'));
 
-        $oSession = $this->getMock("Session", array("getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam"), array(), '', null);
         $oSession->expects($this->at(0))->method("getSessionParam")->with($this->equalTo("aDB"))->will($this->returnValue(array("dbiDemoData" => 1, "iUtfMode" => 1)));
         $oSession->expects($this->at(1))->method("getSessionParam")->with($this->equalTo("location_lang"))->will($this->returnValue("en"));
 
@@ -611,7 +612,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->at(8))->method("setMySqlCollation");
         $oDb->expects($this->at(9))->method("convertConfigTableToUtf");
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
         $oController->expects($this->at(1))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
@@ -629,7 +630,7 @@ class ControllerTest extends OxidTestCase
      */
     public function testFinish()
     {
-        $oSession = $this->getMock("Session", array("getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("getSessionParam"), array(), '', null);
         $oSession->expects($this->at(0))->method("getSessionParam")->will($this->returnValue(array("sShopDir" => getShopBasePath())));
         $oSession->expects($this->at(1))->method("getSessionParam")->with($this->equalTo("aSetupConfig"));
 
@@ -639,7 +640,7 @@ class ControllerTest extends OxidTestCase
         $oView->expects($this->at(2))->method("setViewParam")->with($this->equalTo("aSetupConfig"));
         $oView->expects($this->at(3))->method("setViewParam")->with($this->equalTo("blWritableConfig"));
 
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at(0))->method("getInstance")->with($this->equalTo("Session"))->will($this->returnValue($oSession));
         $oController->expects($this->at(1))->method("getView")->will($this->returnValue($oView));
@@ -663,7 +664,7 @@ class ControllerTest extends OxidTestCase
         $oSetup->expects($this->once())->method("getStep")->with($this->equalTo("STEP_DIRS_INFO"));
 
         $iAt = 0;
-        $oSession = $this->getMock("Session", array("setSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("setSessionParam"), array(), '', null);
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aPath"));
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aSetupConfig"));
 
@@ -677,7 +678,7 @@ class ControllerTest extends OxidTestCase
         $oUtils->expects($this->exactly(1))->method("extractRewriteBase");
 
         $iAt = 0;
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at($iAt++))->method("getView")->will($this->returnValue($oView));
         $oController->expects($this->at($iAt++))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
@@ -704,7 +705,7 @@ class ControllerTest extends OxidTestCase
         $oSetup->expects($this->once())->method("getStep")->with($this->equalTo("STEP_DIRS_INFO"));
 
         $iAt = 0;
-        $oSession = $this->getMock("Session", array("setSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("setSessionParam"), array(), '', null);
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aPath"));
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aSetupConfig"));
 
@@ -722,7 +723,7 @@ class ControllerTest extends OxidTestCase
         $oUtils->expects($this->at($iAt++))->method("extractRewriteBase")->with($this->equalTo("sShopURL"))->will($this->returnValue("sRewriteBase"));
 
         $iAt = 0;
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at($iAt++))->method("getView")->will($this->returnValue($oView));
         $oController->expects($this->at($iAt++))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
@@ -768,7 +769,7 @@ class ControllerTest extends OxidTestCase
         $oUtils->expects($this->at($iAt++))->method("isValidEmail")->will($this->returnValue(false));
 
         $iAt = 0;
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at($iAt++))->method("getView")->will($this->returnValue($oView));
         $oController->expects($this->at($iAt++))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
@@ -795,7 +796,7 @@ class ControllerTest extends OxidTestCase
         $oSetup->expects($this->once())->method("getStep")->with($this->equalTo("STEP_DIRS_INFO"));
 
         $iAt = 0;
-        $oSession = $this->getMock("Session", array("setSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("setSessionParam"), array(), '', null);
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aPath"));
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aSetupConfig"));
 
@@ -813,7 +814,7 @@ class ControllerTest extends OxidTestCase
         $oUtils->expects($this->at($iAt++))->method("extractRewriteBase")->with($this->equalTo("sShopURL"))->will($this->returnValue("sRewriteBase"));
 
         $iAt = 0;
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at($iAt++))->method("getView")->will($this->returnValue($oView));
         $oController->expects($this->at($iAt++))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
@@ -840,7 +841,7 @@ class ControllerTest extends OxidTestCase
         $oSetup->expects($this->once())->method("getStep")->with($this->equalTo("STEP_DIRS_INFO"));
 
         $iAt = 0;
-        $oSession = $this->getMock("Session", array("setSessionParam", "getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("setSessionParam", "getSessionParam"), array(), '', null);
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aPath"));
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aSetupConfig"));
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aAdminData"));
@@ -862,7 +863,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->once())->method("writeAdminLoginData");
 
         $iAt = 0;
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at($iAt++))->method("getView")->will($this->returnValue($oView));
         $oController->expects($this->at($iAt++))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
@@ -899,7 +900,7 @@ class ControllerTest extends OxidTestCase
         }
 
         $iAt = 0;
-        $oSession = $this->getMock("Session", array("setSessionParam", "getSessionParam"), array(), '', null);
+        $oSession = $this->getMock('SetupSession', array("setSessionParam", "getSessionParam"), array(), '', null);
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aPath"));
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aSetupConfig"));
         $oSession->expects($this->at($iAt++))->method("setSessionParam")->with($this->equalTo("aAdminData"));
@@ -925,7 +926,7 @@ class ControllerTest extends OxidTestCase
         $oDb->expects($this->once())->method("writeAdminLoginData");
 
         $iAt = 0;
-        
+
         $oController = $this->getMock(get_class($this->getController()), array("getView", "getInstance"));
         $oController->expects($this->at($iAt++))->method("getView")->will($this->returnValue($oView));
         $oController->expects($this->at($iAt++))->method("getInstance")->with($this->equalTo("Setup"))->will($this->returnValue($oSetup));
