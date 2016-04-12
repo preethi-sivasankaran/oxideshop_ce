@@ -107,17 +107,17 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     }
 
     /**
-     * Get one row.
+     * Get one row of the corresponding sql select statement.
      *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
-     * @param bool       $type       Connection type
+     * @param string     $sqlSelect      The sql select statement we want to execute.
+     * @param array|bool $parameters     Array of parameters, for the given sql statement.
+     * @param bool       $executeOnSlave Execute this statement on the slave database. Only evaluated in a master - slave setup.
      *
      * @return array
      */
-    public function getRow($query, $parameters = false, $type = true)
+    public function getRow($sqlSelect, $parameters = false, $type = true)
     {
-        return $this->getDb($type)->getRow($query, $parameters);
+        return $this->getDb($type)->getRow($sqlSelect, $parameters);
     }
 
     /**
