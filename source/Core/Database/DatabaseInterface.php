@@ -23,6 +23,7 @@ namespace OxidEsales\Eshop\Core\Database;
 
 use object_ADOConnection;
 use object_ResultSet;
+use OxidEsales\Eshop\Core\exception\DatabaseException;
 use pear_ADOConnection;
 
 /**
@@ -250,21 +251,21 @@ interface DatabaseInterface
     /**
      * Start the mysql transaction.
      *
-     * @return bool
+     * @throws DatabaseException
      */
     public function startTransaction();
 
     /**
      * Commit the mysql transaction.
      *
-     * @return bool
+     * @throws DatabaseException
      */
     public function commitTransaction();
 
     /**
      * RollBack the mysql transaction.
      *
-     * @return bool
+     * @throws DatabaseException
      */
     public function rollbackTransaction();
 
@@ -272,11 +273,11 @@ interface DatabaseInterface
      * Set transaction isolation level.
      * Allowed values 'READ UNCOMMITTED', 'READ COMMITTED', 'REPEATABLE READ' and 'SERIALIZABLE'.
      *
-     * @param null|string $level The level of
+     * @param string $level The transaction isolation level
      *
-     * @return bool
+     * @throws \InvalidArgumentException|DatabaseException
      */
-    public function setTransactionIsolationLevel($level = null);
+    public function setTransactionIsolationLevel($level);
 
     /**
      * Calls the database UI method.
