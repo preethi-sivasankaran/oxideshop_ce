@@ -20,11 +20,13 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Core\Contract;
+
 /**
  * oxTagCloud set interface
  *
  */
-interface oxITagList
+interface ITagList
 {
 
     /**
