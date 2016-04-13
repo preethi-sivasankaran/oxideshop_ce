@@ -87,6 +87,8 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             'oxviewconfig' => '\OxidEsales\Eshop\Core\ViewConfig',
             'oxwidgetcontrol' => '\OxidEsales\Eshop\Core\WidgetControl',
 
+
+
             //not yet namespaced:
             ###'oxconfk' => '\OxidEsales\Eshop\Core\ConfigurationKey',
             ###'oxfunctions' => '\OxidEsales\Eshop\Core\Functions',
@@ -206,6 +208,13 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             'oxpricelist' => '\OxidEsales\Eshop\Core\PriceList',
             'oxdisplayerror' => '\OxidEsales\Eshop\Core\DisplayError',
 
+            'oxiconfigurable' => '\OxidEsales\Eshop\Core\Contract\IConfigurable',
+            'oxicountryaware' => '\OxidEsales\Eshop\Core\Contract\ICountryAware',
+            'oxidisplayerror' => '\OxidEsales\Eshop\Core\Contract\IDisplayError',
+            'oximodulevalidator' => '\OxidEsales\Eshop\Core\Contract\IModuleValidator',
+            'oxiselectlist' => '\OxidEsales\Eshop\Core\Contract\ISelectList',
+            'oxitaglist' => '\OxidEsales\Eshop\Core\Contract\ITagList',
+            'oxiurl' => '\OxidEsales\Eshop\Core\Contract\IUrl',
         );
     }
 }
