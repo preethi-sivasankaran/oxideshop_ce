@@ -29,8 +29,8 @@ use mysqli_extend_ADOConnection as mysqli_extend;
 use mysqli_meta_ADOConnection as mysqli_extra;
 use object_ADOConnection;
 use object_ResultSet;
-use pear_ADOConnection;
 use OxidEsales\Eshop;
+use pear_ADOConnection;
 
 /**
  * Database connection class
@@ -62,7 +62,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function setFetchMode($fetchMode)
     {
-        $this->_oDb->setFetchMode($fetchMode);
+        $this->_oDb->SetFetchMode($fetchMode);
     }
 
     /**
@@ -81,27 +81,27 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      * Get one column, which you have to give into the sql select statement, of the first row, corresponding to the
      * given sql statement.
      *
-     * @param string     $sqlSelect      The sql select statement
-     * @param array|bool $parameters     Array of parameters, for the given sql statement.
-     * @param bool       $executeOnSlave Should the given sql statement executed on the slave?
+     * @param string $sqlSelect      The sql select statement
+     * @param array  $parameters     Array of parameters, for the given sql statement.
+     * @param bool   $executeOnSlave Should the given sql statement executed on the slave?
      *
      * @return string The first column of the first row, which is fitting to the given sql select statement.
      */
-    public function getOne($sqlSelect, $parameters = false, $executeOnSlave = true)
+    public function getOne($sqlSelect, $parameters = array(), $executeOnSlave = true)
     {
-        return $this->getDb($executeOnSlave)->getOne($sqlSelect, $parameters);
+        return $this->getDb($executeOnSlave)->GetOne($sqlSelect, $parameters);
     }
 
     /**
      * Get values as array.
      *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
-     * @param bool       $type       Connection type
+     * @param string $query
+     * @param array  $parameters Array of parameters
+     * @param bool   $type       Connection type
      *
      * @return array
      */
-    public function getArray($query, $parameters = false, $type = true)
+    public function getArray($query, $parameters = array(), $type = true)
     {
         return $this->getDb($type)->getArray($query, $parameters);
     }
@@ -109,27 +109,27 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     /**
      * Get one row.
      *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
-     * @param bool       $type       Connection type
+     * @param string $query
+     * @param array  $parameters Array of parameters
+     * @param bool   $type       Connection type
      *
      * @return array
      */
-    public function getRow($query, $parameters = false, $type = true)
+    public function getRow($query, $parameters = array(), $type = true)
     {
-        return $this->getDb($type)->getRow($query, $parameters);
+        return $this->getDb($type)->GetRow($query, $parameters);
     }
 
     /**
      * Get all values. The same as getArray.
      *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
-     * @param bool       $type       Connection type
+     * @param string $query
+     * @param array  $parameters Array of parameters
+     * @param bool   $type       Connection type
      *
      * @return array
      */
-    public function getAll($query, $parameters = false, $type = true)
+    public function getAll($query, $parameters = array(), $type = true)
     {
         return $this->getDb($type)->getAll($query, $parameters);
     }
@@ -137,27 +137,27 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     /**
      * Get value
      *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
-     * @param bool       $type       Connection type
+     * @param string $query
+     * @param array  $parameters Array of parameters
+     * @param bool   $type       Connection type
      *
      * @return mixed|Object_ResultSet
      */
-    public function select($query, $parameters = false, $type = true)
+    public function select($query, $parameters = array(), $type = true)
     {
-        return $this->getDb($type)->execute($query, $parameters);
+        return $this->getDb($type)->Execute($query, $parameters);
     }
 
     /**
      * Get values as an associative array.
      *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
-     * @param bool       $type       Connection type
+     * @param string $query
+     * @param array  $parameters Array of parameters
+     * @param bool   $type       Connection type
      *
      * @return array
      */
-    public function getAssoc($query, $parameters = false, $type = true)
+    public function getAssoc($query, $parameters = array(), $type = true)
     {
         return $this->getDb($type)->getAssoc($query, $parameters);
     }
@@ -165,29 +165,29 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     /**
      * Get column value
      *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
-     * @param bool       $type       Connection type
+     * @param string $query
+     * @param array  $parameters Array of parameters
+     * @param bool   $type       Connection type
      *
      * @return array
      */
-    public function getCol($query, $parameters = false, $type = true)
+    public function getCol($query, $parameters = array(), $type = true)
     {
-        return $this->getDb($type)->getCol($query, $parameters);
+        return $this->getDb($type)->GetCol($query, $parameters);
     }
 
     /**
      * Get array
      *
-     * @param string     $query
-     * @param int        $numberOfRows Number of rows to select
-     * @param int        $offset       Number of rows to skip
-     * @param array|bool $parameters   Array of parameters
-     * @param bool       $type         Connection type
+     * @param string $query
+     * @param int    $numberOfRows Number of rows to select
+     * @param int    $offset       Number of rows to skip
+     * @param array  $parameters   Array of parameters
+     * @param bool   $type         Connection type
      *
      * @return mixed|Object_ResultSet
      */
-    public function selectLimit($query, $numberOfRows = -1, $offset = -1, $parameters = false, $type = true)
+    public function selectLimit($query, $numberOfRows = -1, $offset = -1, $parameters = array(), $type = true)
     {
         return $this->getDb($type)->SelectLimit($query, $numberOfRows, $offset, $parameters);
     }
@@ -195,14 +195,14 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     /**
      * Executes query and returns result set.
      *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
+     * @param string $query
+     * @param array  $parameters Array of parameters
      *
      * @return mixed|Object_ResultSet
      */
-    public function execute($query, $parameters = false)
+    public function execute($query, $parameters = array())
     {
-        return $this->getDb(false)->execute($query, $parameters);
+        return $this->getDb(false)->Execute($query, $parameters);
     }
 
     /**
@@ -213,7 +213,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      *
      * @return mixed|Object_ResultSet
      */
-    public function query($query, $parameters = false)
+    public function query($query, $parameters = array())
     {
         return $this->getDb(false)->Query($query, $parameters);
     }
@@ -269,7 +269,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function quote($sValue)
     {
-        return $this->getDb(false)->quote($sValue);
+        return $this->getDb(false)->Quote($sValue);
     }
 
     /**
@@ -320,7 +320,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function startTransaction()
     {
-        return $this->getDb(false)->execute('START TRANSACTION');
+        return $this->getDb(false)->Execute('START TRANSACTION');
     }
 
     /**
@@ -330,7 +330,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function commitTransaction()
     {
-        return $this->getDb(false)->execute('COMMIT');
+        return $this->getDb(false)->Execute('COMMIT');
     }
 
     /**
@@ -340,7 +340,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function rollbackTransaction()
     {
-        return $this->getDb(false)->execute('ROLLBACK');
+        return $this->getDb(false)->Execute('ROLLBACK');
     }
 
     /**
@@ -357,7 +357,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
 
         $availableLevels = array('READ UNCOMMITTED', 'READ COMMITTED', 'REPEATABLE READ', 'SERIALIZABLE');
         if (in_array(strtoupper($level), $availableLevels)) {
-            $result = $this->getDb(false)->execute('SET TRANSACTION ISOLATION LEVEL ' . $level);
+            $result = $this->getDb(false)->Execute('SET TRANSACTION ISOLATION LEVEL ' . $level);
         }
 
         return $result;
