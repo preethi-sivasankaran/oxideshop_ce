@@ -301,19 +301,6 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     }
 
     /**
-     * Returns meta data.
-     *
-     * @param string $table
-     * @param bool   $numberOfIndexes
-     *
-     * @return array
-     */
-    public function metaColumnNames($table, $numberOfIndexes = false)
-    {
-        return $this->getDb(false)->MetaColumnNames($table, $numberOfIndexes);
-    }
-
-    /**
      * Start mysql transaction.
      *
      * @return bool
