@@ -20,11 +20,13 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Component\Widget;
+
 /**
  * Tag cloud.
  * Shop starter, manages starting visible articles, etc.
  */
-class oxwTagCloud extends oxWidget
+class TagCloud extends \oxWidget
 {
 
     /**
