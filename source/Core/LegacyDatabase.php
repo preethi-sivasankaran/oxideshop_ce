@@ -223,7 +223,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      *
      * @return int
      */
-    public function affected_rows()
+    public function affectedRows()
     {
         return $this->getDb(false)->Affected_Rows();
     }

@@ -1385,7 +1385,7 @@ class Unit_Models_oxSeoEncoderTest extends OxidTestCase
         $oEncoder->UNITsaveToDb("static", 'test', 'http://std', 'http://seo', 0, 0);
         $oDb = oxDb::getDb();
         $oDb->Execute('delete from oxseo where oxobjectid="test"');
-        $this->assertEquals(1, $oDb->affected_Rows());
+        $this->assertEquals(1, $oDb->affectedRows());
     }
 
     public function testTrimUrl()

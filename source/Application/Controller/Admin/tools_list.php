@@ -108,7 +108,7 @@ class Tools_List extends oxAdminList
                             $aQErrorNumbers [$iQueriesCounter] = null;
 
                             $iErrorNum = $oDB->ErrorNo();
-                            if ($iAffectedRows = $oDB->affected_Rows() !== false && $iErrorNum == 0) {
+                            if ($iAffectedRows = $oDB->affectedRows() !== false && $iErrorNum == 0) {
                                 $aQAffectedRows[$iQueriesCounter] = $iAffectedRows;
                             } else {
                                 $aQErrorMessages[$iQueriesCounter] = oxStr::getStr()->htmlentities($oDB->errorMsg());
