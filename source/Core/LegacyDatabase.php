@@ -149,20 +149,6 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     }
 
     /**
-     * Get values as an associative array.
-     *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
-     * @param bool       $type       Connection type
-     *
-     * @return array
-     */
-    public function getAssoc($query, $parameters = false, $type = true)
-    {
-        return $this->getDb($type)->getAssoc($query, $parameters);
-    }
-
-    /**
      * Get column value
      *
      * @param string     $query

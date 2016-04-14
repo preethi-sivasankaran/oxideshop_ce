@@ -122,17 +122,6 @@ interface DatabaseInterface
     public function select($query, $parameters = false, $executeOnSlave = true);
 
     /**
-     * Get values as an associative array.
-     *
-     * @param string     $query          The sql statement we want to execute.
-     * @param array|bool $parameters     The parameters array.
-     * @param bool       $executeOnSlave Execute this statement on the slave database. Only evaluated in a master - slave setup.
-     *
-     * @return array
-     */
-    public function getAssoc($query, $parameters = false, $executeOnSlave = true);
-
-    /**
      * Get the values of a column.
      *
      * @param string     $query          The sql statement we want to execute.

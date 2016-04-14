@@ -123,20 +123,6 @@ class Unit_Core_oxLegacyDbTest extends OxidTestCase
     }
 
     /**
-     * Test case for oxLegacyDb::getAssoc();
-     */
-    public function testGetAssoc()
-    {
-        $oDbLib = $this->getMock("dbLib", array("getAssoc"));
-        $oDbLib->expects($this->once())->method('getAssoc')->with($this->equalTo('query'));
-
-        $oLegacyDb = $this->getMock("oxLegacyDb", array("getDb"));
-        $oLegacyDb->expects($this->once())->method('getDb')->with($this->equalTo(false))->will($this->returnValue($oDbLib));
-
-        $oLegacyDb->getAssoc('query', false, false);
-    }
-
-    /**
      * Test case for oxLegacyDb::getCol();
      */
     public function testGetCol()
