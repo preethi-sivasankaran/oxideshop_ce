@@ -319,23 +319,7 @@ class Database
      */
     public function escapeString($string)
     {
-        if ('mysql' == self::_getConfigParam("_dbType")) {
-            return mysql_real_escape_string($string, $this->_getConnectionId());
-        } elseif ('mysqli' == self::_getConfigParam("_dbType")) {
-            return mysqli_real_escape_string($this->_getConnectionId(), $string);
-        } else {
-            return mysql_real_escape_string($string, $this->_getConnectionId());
-        }
-    }
-
-    /**
-     * Get connection ID
-     *
-     * @return mysqli identifier
-     */
-    protected function _getConnectionId()
-    {
-        return self::getDb()->getDb()->connectionId;
+        return self::getDb()->quote($string);
     }
 
     /**
