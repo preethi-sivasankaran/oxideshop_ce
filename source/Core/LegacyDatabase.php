@@ -62,7 +62,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function setFetchMode($fetchMode)
     {
-        $this->_oDb->setFetchMode($fetchMode);
+        $this->_oDb->SetFetchMode($fetchMode);
     }
 
     /**
@@ -89,7 +89,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function getOne($sqlSelect, $parameters = false, $executeOnSlave = true)
     {
-        return $this->getDb($executeOnSlave)->getOne($sqlSelect, $parameters);
+        return $this->getDb($executeOnSlave)->GetOne($sqlSelect, $parameters);
     }
 
     /**
@@ -115,9 +115,9 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      *
      * @return array
      */
-    public function getRow($sqlSelect, $parameters = false, $type = true)
+    public function getRow($sqlSelect, $parameters = false, $executeOnSlave = true)
     {
-        return $this->getDb($type)->getRow($sqlSelect, $parameters);
+        return $this->getDb($executeOnSlave)->GetRow($sqlSelect, $parameters);
     }
 
     /**
@@ -145,7 +145,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function select($query, $parameters = false, $type = true)
     {
-        return $this->getDb($type)->execute($query, $parameters);
+        return $this->getDb($type)->Execute($query, $parameters);
     }
 
     /**
@@ -173,7 +173,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function getCol($query, $parameters = false, $type = true)
     {
-        return $this->getDb($type)->getCol($query, $parameters);
+        return $this->getDb($type)->GetCol($query, $parameters);
     }
 
     /**
@@ -202,7 +202,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function execute($query, $parameters = false)
     {
-        return $this->getDb(false)->execute($query, $parameters);
+        return $this->getDb(false)->Execute($query, $parameters);
     }
 
     /**
@@ -269,7 +269,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function quote($sValue)
     {
-        return $this->getDb(false)->quote($sValue);
+        return $this->getDb(false)->Quote($sValue);
     }
 
     /**
@@ -320,7 +320,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function startTransaction()
     {
-        return $this->getDb(false)->execute('START TRANSACTION');
+        return $this->getDb(false)->Execute('START TRANSACTION');
     }
 
     /**
@@ -330,7 +330,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function commitTransaction()
     {
-        return $this->getDb(false)->execute('COMMIT');
+        return $this->getDb(false)->Execute('COMMIT');
     }
 
     /**
@@ -340,7 +340,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function rollbackTransaction()
     {
-        return $this->getDb(false)->execute('ROLLBACK');
+        return $this->getDb(false)->Execute('ROLLBACK');
     }
 
     /**
@@ -357,7 +357,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
 
         $availableLevels = array('READ UNCOMMITTED', 'READ COMMITTED', 'REPEATABLE READ', 'SERIALIZABLE');
         if (in_array(strtoupper($level), $availableLevels)) {
-            $result = $this->getDb(false)->execute('SET TRANSACTION ISOLATION LEVEL ' . $level);
+            $result = $this->getDb(false)->Execute('SET TRANSACTION ISOLATION LEVEL ' . $level);
         }
 
         return $result;
@@ -378,7 +378,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      *
      * @return int
      */
-    public function insert_Id()
+    public function lastInsertId()
     {
         return $this->getDb(false)->Insert_ID();
     }

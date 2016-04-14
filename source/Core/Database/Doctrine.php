@@ -791,7 +791,7 @@ class Doctrine extends oxLegacyDb implements DatabaseInterface, LoggerAwareInter
      *
      * @return string The last inserted ID.
      */
-    public function insert_Id()
+    public function lastInsertId()
     {
         return $this->getConnection()->lastInsertId();
     }
@@ -835,5 +835,4 @@ class Doctrine extends oxLegacyDb implements DatabaseInterface, LoggerAwareInter
 
         return $result;
     }
-
 }

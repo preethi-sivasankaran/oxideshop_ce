@@ -23,6 +23,7 @@ namespace OxidEsales\Eshop\Tests\integration\core\Database;
  */
 
 use oxDb;
+use OxidEsales\Eshop\Core\Database\DatabaseInterface;
 use OxidEsales\Eshop\Core\Database\Doctrine;
 use OxidEsales\TestingLibrary\UnitTestCase;
 
@@ -77,7 +78,7 @@ abstract class DatabaseInterfaceImplementationBaseTest extends UnitTestCase
     const USE_LEGACY_DATABASE = false;
     
     /**
-     * @var mixed The database to test.
+     * @var DatabaseInterface The database to test.
      */
     protected $database = null;
 
