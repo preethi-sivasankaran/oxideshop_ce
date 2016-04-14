@@ -95,6 +95,7 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             'manufacturerlist' => '\OxidEsales\Eshop\Application\Controller\ManufacturerListController',
             'review' => '\OxidEsales\Eshop\Application\Controller\ReviewController',
             'vendorlist' => '\OxidEsales\Eshop\Application\Controller\VendorListController',
+            'actions' => '\OxidEsales\Eshop\Application\Controller\Admin\ActionsController',
 
             'oxwactions' => '\OxidEsales\Eshop\Application\Component\Widget\Actions',
             'oxwbetanote' => '\OxidEsales\Eshop\Application\Component\Widget\BetaNote',
