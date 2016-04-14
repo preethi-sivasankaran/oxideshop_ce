@@ -128,6 +128,8 @@ class ClassMap extends \OxidEsales\Eshop\Core\Edition\ClassMap
             'oxcmp_user' => '\OxidEsales\Eshop\Application\Component\UserComponent',
             'oxlocator' => '\OxidEsales\Eshop\Application\Component\Locator',
 
+            'account_user' => '\OxidEsales\Eshop\Application\Controller\AccountUserController',
+            'account_wishlist' => '\OxidEsales\Eshop\Application\Controller\AccountWishlistController',
 
         );
     }
