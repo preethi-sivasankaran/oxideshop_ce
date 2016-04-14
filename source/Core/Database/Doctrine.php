@@ -719,35 +719,6 @@ class Doctrine extends oxLegacyDb implements DatabaseInterface, LoggerAwareInter
 
     /**
      * Get all values as an array.
-     * Alias of getArray.
-     *
-     * @param string     $query
-     * @param array|bool $parameters
-     * @param bool       $executeOnSlave
-     *
-     * @see Doctrine::getArray()
-     *
-     * @throws     DatabaseException
-     * @throws     \InvalidArgumentException
-     *
-     * @return array
-     */
-    public function getAll($query, $parameters = array(), $executeOnSlave = true)
-    {
-        $result = null;
-
-        try {
-            $result = $this->getArray($query, $parameters, $executeOnSlave);
-        } catch (DBALException $exception) {
-            $exception = $this->convertException($exception);
-            $this->handleException($exception);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get all values as an array.
      * The format of returned the array depends on the fetch mode.
      * Set the desired fetch mode with DatabaseInterface::setFetchMode() before calling this method.
      * The default fetch mode is defined in Doctrine::$fetchMode
@@ -764,7 +735,7 @@ class Doctrine extends oxLegacyDb implements DatabaseInterface, LoggerAwareInter
      *
      * @return array
      */
-    public function getArray($query, $parameters = array(), $executeOnSlave = true)
+    public function getAll($query, $parameters = array(), $executeOnSlave = true)
     {
         $statement = null;
 

@@ -553,7 +553,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
     }
 
     /**
-     * Test that getArray returns an array with integer keys, if setFetchMode is not called before calling getArray.
+     * Test that getAll returns an array with integer keys, if setFetchMode is not called before calling getArray.
      *
      * @todo IMHO This is an inconsistent implementation of ADOdb Lite, as not calling setFetchMode should give the same results
      *       as calling setFetchMode with the param DatabaseInterface::FETCH_MODE_DEFAULT
@@ -570,7 +570,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
         self::assureTestTableIsEmpty();
         $database->execute("INSERT INTO " . self::TABLE_NAME . " (OXID) VALUES ('" . self::FIXTURE_OXID_1 . "')");
 
-        $actualResult = $database->getArray("SELECT OXID FROM " . self::TABLE_NAME . " WHERE OXID = '" . self::FIXTURE_OXID_1 . "'");
+        $actualResult = $database->getAll("SELECT OXID FROM " . self::TABLE_NAME . " WHERE OXID = '" . self::FIXTURE_OXID_1 . "'");
 
         self::assureTestTableIsEmpty();
 
@@ -582,19 +582,19 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
      * assertSame is not used here as the order of element in the result can crash the test and the order of elements
      * does not matter in this test case.
      *
-     * @dataProvider dataProviderTestGetArrayRespectsFetchMode
+     * @dataProvider dataProviderTestGetAllRespectsFetchMode
      *
      * @param string $message        Test message
      * @param int    $fetchMode      A given fetch mode
      * @param array  $expectedResult The expected result
      */
-    public function testGetArrayRespectsTheGivenFetchMode($message, $fetchMode, $expectedResult)
+    public function testGetAllRespectsTheGivenFetchMode($message, $fetchMode, $expectedResult)
     {
         self::assureTestTableIsEmpty();
         $this->database->execute("INSERT INTO " . self::TABLE_NAME . " (OXID) VALUES ('" . self::FIXTURE_OXID_1 . "')");
         $this->database->setFetchMode($fetchMode);
 
-        $actualResult = $this->database->getArray("SELECT OXID FROM " . self::TABLE_NAME . " WHERE OXID = '" . self::FIXTURE_OXID_1 . "'");
+        $actualResult = $this->database->getAll("SELECT OXID FROM " . self::TABLE_NAME . " WHERE OXID = '" . self::FIXTURE_OXID_1 . "'");
 
         self::assureTestTableIsEmpty();
 
@@ -606,7 +606,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
      *
      * @return array
      */
-    public function dataProviderTestGetArrayRespectsFetchMode()
+    public function dataProviderTestGetAllRespectsFetchMode()
     {
         return array(
             [
@@ -645,7 +645,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
         $this->database->execute("INSERT INTO " . self::TABLE_NAME . " (OXID) VALUES ('" . self::FIXTURE_OXID_1 . "')");
         $this->database->setFetchMode($fetchMode);
 
-        $actualResult = $this->database->getArray(
+        $actualResult = $this->database->getAll(
             "SELECT OXID FROM " . self::TABLE_NAME . " WHERE OXID = '" . self::FIXTURE_OXID_1 . "'",
             array()
         );
@@ -668,7 +668,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
         $this->database->execute("INSERT INTO " . self::TABLE_NAME . " (OXID) VALUES ('" . self::FIXTURE_OXID_1 . "')");
         $this->database->setFetchMode($fetchMode);
 
-        $actualResult = $this->database->getArray(
+        $actualResult = $this->database->getAll(
             "SELECT OXID FROM " . self::TABLE_NAME . " WHERE OXID = ?",
             array(self::FIXTURE_OXID_1)
         );
@@ -695,7 +695,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
         $this->database->execute("INSERT INTO " . self::TABLE_NAME . " (OXID) VALUES ('" . self::FIXTURE_OXID_2 . "')");
         $this->database->setFetchMode($fetchMode);
 
-        $actualResult = $this->database->getArray(
+        $actualResult = $this->database->getAll(
             "SELECT OXID FROM " . self::TABLE_NAME . " WHERE OXID IN (?, ?)",
             array(self::FIXTURE_OXID_1, self::FIXTURE_OXID_2)
         );
@@ -714,7 +714,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
 
         $this->setExpectedException($expectedExceptionClass);
 
-        $this->database->getArray(
+        $this->database->getAll(
             "SOME INVALID QUERY",
             array()
         );
@@ -726,7 +726,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
      *
      * @return array
      */
-    public function dataProviderTestGetArrayThrowsDatabaseExceptionOnInvalidArguments()
+    public function dataProviderTestGetAllThrowsDatabaseExceptionOnInvalidArguments()
     {
         return array(
             array(
@@ -773,7 +773,7 @@ abstract class DatabaseInterfaceImplementationTest extends DatabaseInterfaceImpl
         $this->database->execute("INSERT INTO " . self::TABLE_NAME . " (OXID) VALUES ('" . self::FIXTURE_OXID_1 . "')");
         $this->database->setFetchMode($fetchMode);
 
-        $actualResult = $this->database->getArray(
+        $actualResult = $this->database->getAll(
             "SELECT OXID FROM " . self::TABLE_NAME . " WHERE OXID = '" . self::FIXTURE_OXID_1 . "'",
             $validParameter
         );

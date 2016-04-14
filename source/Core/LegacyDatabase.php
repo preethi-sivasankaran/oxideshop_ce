@@ -93,20 +93,6 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     }
 
     /**
-     * Get values as array.
-     *
-     * @param string     $query
-     * @param array|bool $parameters Array of parameters
-     * @param bool       $type       Connection type
-     *
-     * @return array
-     */
-    public function getArray($query, $parameters = false, $type = true)
-    {
-        return $this->getDb($type)->getArray($query, $parameters);
-    }
-
-    /**
      * Get one row of the corresponding sql select statement.
      *
      * @param string     $sqlSelect      The sql select statement we want to execute.

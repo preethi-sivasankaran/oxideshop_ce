@@ -186,7 +186,7 @@ class Integration_Multilanguage_AdditionalTablesTest extends MultilanguageTestCa
     protected function removeAdditionalTables($name)
     {
         $sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME LIKE '%" . $name . "%'";
-        $result = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->getArray($sql);
+        $result = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->getAll($sql);
         foreach ($result as $sub) {
             oxDb::getDb()->query("DROP TABLE IF EXISTS `" . $sub['TABLE_NAME'] . "`");
         }

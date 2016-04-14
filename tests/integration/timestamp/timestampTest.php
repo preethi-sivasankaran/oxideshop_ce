@@ -190,7 +190,7 @@ class Integration_Timestamp_TimestampTest extends OxidTestCase
     {
         $oDb = oxDb::getDb();
         $sQ = "SHOW FULL tables WHERE Table_Type = 'BASE TABLE'";
-        $aTableNames = $oDb->getArray($sQ);
+        $aTableNames = $oDb->getAll($sQ);
         foreach ($aTableNames as $sKey => $aTable) {
             $sTableName = $aTable[0];
             $sSelectSql = "SHOW COLUMNS FROM `$sTableName` LIKE 'oxtimestamp'";

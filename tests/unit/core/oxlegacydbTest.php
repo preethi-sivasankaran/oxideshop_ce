@@ -70,13 +70,13 @@ class Unit_Core_oxLegacyDbTest extends OxidTestCase
      */
     public function testGetArray()
     {
-        $oDbLib = $this->getMock("dbLib", array("getArray"));
-        $oDbLib->expects($this->once())->method('getArray')->with($this->equalTo('query'));
+        $oDbLib = $this->getMock("dbLib", array("getAll"));
+        $oDbLib->expects($this->once())->method('getAll')->with($this->equalTo('query'));
 
         $oLegacyDb = $this->getMock("oxLegacyDb", array("getDb"));
         $oLegacyDb->expects($this->once())->method('getDb')->with($this->equalTo(false))->will($this->returnValue($oDbLib));
 
-        $oLegacyDb->getArray('query', false, false);
+        $oLegacyDb->getAll('query', false, false);
     }
 
 
@@ -234,19 +234,6 @@ class Unit_Core_oxLegacyDbTest extends OxidTestCase
         $oLegacyDb->quote('value');
     }
 
-    /**
-     * Test case for oxLegacyDb::qstr();
-     */
-    public function testqstr()
-    {
-        $oDbLib = $this->getMock("dbLib", array("qstr"));
-        $oDbLib->expects($this->once())->method('qstr')->with($this->equalTo('value'));
-
-        $oLegacyDb = $this->getMock("oxLegacyDb", array("getDb"));
-        $oLegacyDb->expects($this->once())->method('getDb')->will($this->returnValue($oDbLib));
-
-        $oLegacyDb->qstr('value');
-    }
 
     /**
      * Test case for oxLegacyDb::metaColumns();

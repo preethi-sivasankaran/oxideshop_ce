@@ -23,6 +23,7 @@ namespace OxidEsales\Eshop\Core\Database;
 
 use object_ADOConnection;
 use object_ResultSet;
+use OxidEsales\Eshop\Core\exception\DatabaseException;
 use pear_ADOConnection;
 
 /**
@@ -89,26 +90,25 @@ interface DatabaseInterface
     public function getRow($sqlSelect, $parameters = false, $executeOnSlave = true);
 
     /**
-     * Get all values as array. Alias of getArray.
+     * Get all values as an array.
+     * The format of returned the array depends on the fetch mode.
+     * Set the desired fetch mode with DatabaseInterface::setFetchMode() before calling this method.
+     * The default fetch mode is defined in Doctrine::$fetchMode
      *
-     * @param string $query          The sql statement we want to execute.
-     * @param array  $parameters     The parameters array.
-     * @param bool   $executeOnSlave Execute this statement on the slave database. Only evaluated in a master - slave setup.
+     * @param string     $query          If parameters are given, the "?" in the string will be replaced by the values in the array
+     * @param array|bool $parameters     must loosely evaluate to false or must be an array
+     * @param bool       $executeOnSlave Execute this statement on the slave database. Only evaluated in a master - slave setup.
      *
-     * @return array                 May be associative, indexed or mixed array depending on the given fetch mode
+     * @see DatabaseInterface::setFetchMode()
+     * @see Doctrine::$fetchMode
+     *
+     * @throws     DatabaseException
+     * @throws     \InvalidArgumentException
+     *
+     * @return array
      */
     public function getAll($query, $parameters = array(), $executeOnSlave = true);
 
-    /**
-     * Get all values as array.
-     *
-     * @param string $query          The sql statement we want to execute.
-     * @param array  $parameters     The parameters array.
-     * @param bool   $executeOnSlave Execute this statement on the slave database. Only evaluated in a master - slave setup.
-     *
-     * @return array                 May be associative, indexed or mixed array depending on the given fetch mode
-     */
-    public function getArray($query, $parameters = array(), $executeOnSlave = true);
 
     /**
      * Get value

@@ -427,7 +427,7 @@ class Unit_Admin_AjaxListComponentTest extends OxidTestCase
     {
         $sQ = "select count(*) from oxcategories";
         $oComponent = oxNew('ajaxListComponent');
-        $this->assertEquals(oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->getArray($sQ), $oComponent->UNITgetDataFields($sQ));
+        $this->assertEquals(oxDb::getDb(oxDB::FETCH_MODE_ASSOC)->getAll($sQ), $oComponent->UNITgetDataFields($sQ));
     }
 
     /**
