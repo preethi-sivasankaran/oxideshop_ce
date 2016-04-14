@@ -20,7 +20,7 @@
  * @version   OXID eShop CE
  */
 
-require_once oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/smarty/plugins/modifier.colon.php';
+require_once oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/modifier.colon.php';
 
 class Unit_Maintenance_smartyModifierColonTest extends OxidTestCase
 {

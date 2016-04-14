@@ -20,7 +20,7 @@
  * @version   OXID eShop CE
  */
 
-require_once oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/smarty/plugins/function.oxmultilang.php';
+require_once oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/function.oxmultilang.php';
 
 class Unit_Maintenance_smartyFunctionOxMultiLangTest extends OxidTestCase
 {

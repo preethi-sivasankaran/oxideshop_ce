@@ -20,7 +20,7 @@
  * @version   OXID eShop CE
  */
 
-require_once oxRegistry::getConfig()->getConfigParam('sCoreDir') . 'smarty/plugins/oxemosadapter.php';
+require_once oxRegistry::getConfig()->getConfigParam('sCoreDir') . 'Smarty/Plugin/oxemosadapter.php';
 
 class Unit_Maintenance_oxemosadapterTest extends OxidTestCase
 {

@@ -20,7 +20,7 @@
  * @version   OXID eShop CE
  */
 
-require_once oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/smarty/plugins/function.oxscript.php';
+require_once oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/function.oxscript.php';
 
 class Unit_Maintenance_pluginSmartyOxScriptTest extends OxidTestCase
 {

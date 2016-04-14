@@ -20,7 +20,7 @@
  * @version   OXID eShop CE
  */
 
-require_once oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/smarty/plugins/modifier.oxnumberformat.php';
+require_once oxRegistry::getConfig()->getConfigParam('sShopDir') . 'Core/Smarty/Plugin/modifier.oxnumberformat.php';
 
 class Unit_Maintenance_smartyModifierOxNumberFormatTest extends OxidTestCase
 {
