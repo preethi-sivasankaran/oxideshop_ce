@@ -200,15 +200,6 @@ interface DatabaseInterface
     public function errorMsg();
 
     /**
-     * Quote the given string.
-     *
-     * @param string $value The string we want to quote.
-     *
-     * @return string The given string in quotes.
-     */
-    public function qstr($value);
-
-    /**
      * Quote the given string. Same as qstr.
      *
      * @param string $value The string we want to quote.

@@ -235,19 +235,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     }
 
     /**
-     * Quote string
-     *
-     * @param string $value value
-     *
-     * @return string
-     */
-    public function qstr($value)
-    {
-        return $this->getDb(false)->qstr($value);
-    }
-
-    /**
-     * Quotes string. Same as qstr.
+     * Quotes string.
      *
      * @param string $sValue value
      *
@@ -255,7 +243,7 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
      */
     public function quote($sValue)
     {
-        return $this->getDb(false)->quote($sValue);
+        return $this->getDb(false)->Quote($sValue);
     }
 
     /**
