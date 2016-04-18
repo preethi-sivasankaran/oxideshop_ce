@@ -20,13 +20,17 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
+
+use oxRegistry;
+use oxField;
 
 /**
  * Admin dyn trusted manager.
  *
  * @subpackage dyn
  */
-class dyn_trusted extends Shop_Config
+class DynTrusted extends \Shop_Config
 {
 
     protected $_aTSPaymentIds = array('DIRECT_DEBIT',

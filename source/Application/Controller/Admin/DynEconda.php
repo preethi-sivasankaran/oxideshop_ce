@@ -20,13 +20,14 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
 
 /**
  * Admin Econda manager.
  *
  * @subpackage dyn
  */
-class dyn_econda extends Shop_Config
+class DynEconda extends \Shop_Config
 {
 
     /**

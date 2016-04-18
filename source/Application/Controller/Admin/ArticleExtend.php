@@ -20,6 +20,13 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
+
+use oxRegistry;
+use oxDb;
+use oxField;
+use stdClass;
+
 /**
  * Admin article extended parameters manager.
  * Collects and updates (on user submit) extended article properties ( such as
@@ -27,7 +34,7 @@
  * to any chosen article group.
  * Admin Menu: Manage Products -> Articles -> Extended.
  */
-class Article_Extend extends oxAdminDetails
+class ArticleExtend extends \oxAdminDetails
 {
 
     /**

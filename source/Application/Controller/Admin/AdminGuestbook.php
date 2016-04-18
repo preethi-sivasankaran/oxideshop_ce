@@ -20,13 +20,15 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
+
 /**
  * Guestbook manager.
  * Sets template, that arranges two other templates ("adminguestbook_list.tpl"
  * and "adminguestbook_main.tpl") to frame.
  * Admin Menu: User information -> Guestbook.
  */
-class Admin_Guestbook extends oxAdminView
+class AdminGuestbook extends \oxAdminView
 {
 
     /**

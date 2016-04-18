@@ -30,7 +30,7 @@ use oxDb;
  * Collects shop config information, updates it on user submit, etc.
  * Admin Menu: Main Menu -> Core Settings -> General.
  */
-class ShopConfigController extends \oxAdminDetails
+class ShopConfiguration extends \oxAdminDetails
 {
 
     protected $_sThisTemplate = 'shop_config.tpl';

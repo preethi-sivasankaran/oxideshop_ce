@@ -20,13 +20,18 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
+
+use oxRegistry;
+use oxAdminView;
+
 /**
  * Admin article main voucherserie manager.
  * There is possibility to change voucherserie name, description, valid terms
  * and etc.
  * Admin Menu: Shop Settings -> Vouchers -> Main.
  */
-class VoucherSerie_Main extends DynExportBase
+class VoucherSerieMain extends \DynExportBase
 {
 
     /**
@@ -163,7 +168,7 @@ class VoucherSerie_Main extends DynExportBase
         if ($sClass == 'voucherserie_generate' && !$bRandomNr && empty($sVoucherNr)) {
             return;
         }
-        
+
         $this->_aViewData['refresh'] = 0;
         $this->_aViewData['iStart'] = 0;
         $iEnd = $this->prepareExport();

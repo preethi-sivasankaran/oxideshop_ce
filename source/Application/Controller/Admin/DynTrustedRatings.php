@@ -20,13 +20,18 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
+
+use oxRegistry;
+use SoapClient;
+use SoapFault;
 
 /**
  * Admin dyn trusted manager.
  *
  * @subpackage dyn
  */
-class dyn_trusted_ratings extends Shop_Config
+class DynTrustedRatings extends \Shop_Config
 {
 
     /**

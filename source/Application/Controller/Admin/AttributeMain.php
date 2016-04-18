@@ -20,13 +20,17 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
+
+use oxRegistry;
+
 /**
  * Admin article main attributes manager.
  * There is possibility to change attribute description, assign articles to
  * this attribute, etc.
  * Admin Menu: Manage Products -> Attributes -> Main.
  */
-class Attribute_Main extends oxAdminDetails
+class AttributeMain extends \oxAdminDetails
 {
 
     /**

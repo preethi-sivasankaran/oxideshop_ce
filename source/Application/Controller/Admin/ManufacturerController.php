@@ -20,6 +20,8 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
+
 /**
  * Returns template, that arranges two other templates ("manufacturer_list.tpl"
  * and "manufacturer_main.tpl") to frame.

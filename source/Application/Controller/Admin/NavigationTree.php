@@ -20,6 +20,8 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
+
 use OxidEsales\Eshop\Core\Edition\EditionRootPathProvider;
 use OxidEsales\Eshop\Core\Edition\EditionPathProvider;
 use OxidEsales\Eshop\Core\Edition\EditionSelector;
@@ -27,7 +29,7 @@ use OxidEsales\Eshop\Core\Edition\EditionSelector;
 /**
  * Navigation tree control class
  */
-class OxNavigationTree extends oxSuperCfg
+class NavigationTree extends \oxSuperCfg
 {
     /**
      * stores DOM object for all navigation tree

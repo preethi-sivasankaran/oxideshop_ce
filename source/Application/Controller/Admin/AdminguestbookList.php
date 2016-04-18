@@ -20,12 +20,17 @@
  * @version   OXID eShop CE
  */
 
+namespace OxidEsales\Eshop\Application\Controller\Admin;
+
+use oxDb;
+use oxField;
+
 /**
  * Guestbook records list manager.
  * Returns template, that arranges guestbook records list.
  * Admin Menu: User information -> Guestbook.
  */
-class AdminGuestbook_List extends oxAdminList
+class AdminGuestbookList extends \oxAdminList
 {
 
     /**
