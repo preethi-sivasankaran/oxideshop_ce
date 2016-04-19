@@ -22,7 +22,6 @@ namespace OxidEsales\Eshop\Tests\integration\core\Database;
  * @version       OXID eShop CE
  */
 
-use OxidEsales\Eshop\Core\Database\DatabaseInterface;
 use OxidEsales\Eshop\Core\Database\Doctrine;
 
 /**
@@ -202,49 +201,5 @@ class DoctrineTest extends DatabaseInterfaceImplementationTest
         $databaseMock->getAll(
             "SELECT OXID FROM " . self::TABLE_NAME . " WHERE OXID = '" . self::FIXTURE_OXID_1 . "'"
         );
-    }
-
-    /**
-     * Test, that setFetchMode returns expected values.
-     */
-    public function testSetFetchModeReturnsExpectedValues()
-    {
-        /** Get a fresh database */
-        $database = $this->createDatabase();
-
-        $message = 'Setting the fetch mode on a fresh connection will return null';
-        $expectedReturnValue = DatabaseInterface::FETCH_MODE_NUM;
-        $fetchMode = DatabaseInterface::FETCH_MODE_ASSOC;
-
-        $actualReturnValue = $database->setFetchMode($fetchMode);
-
-        $this->assertSame($expectedReturnValue, $actualReturnValue, $message);
-
-
-        $message = 'Fetch mode was set to FETCH_MODE_ASSOC and will returned now';
-        $expectedReturnValue = DatabaseInterface::FETCH_MODE_ASSOC;
-        $fetchMode = DatabaseInterface::FETCH_MODE_BOTH;
-
-        $actualReturnValue = $database->setFetchMode($fetchMode);
-
-        $this->assertSame($expectedReturnValue, $actualReturnValue, $message);
-
-
-        $message = 'Fetch mode was set to FETCH_MODE_BOTH and will returned now';
-        $expectedReturnValue = DatabaseInterface::FETCH_MODE_BOTH;
-        $fetchMode = DatabaseInterface::FETCH_MODE_DEFAULT;
-
-        $actualReturnValue = $database->setFetchMode($fetchMode);
-
-        $this->assertSame($expectedReturnValue, $actualReturnValue, $message);
-
-
-        $message = 'Fetch mode was set to FETCH_MODE_DEFAULT and will returned now';
-        $expectedReturnValue = DatabaseInterface::FETCH_MODE_DEFAULT;
-        $fetchMode = DatabaseInterface::FETCH_MODE_NUM;
-
-        $actualReturnValue = $database->setFetchMode($fetchMode);
-
-        $this->assertSame($expectedReturnValue, $actualReturnValue, $message);
     }
 }
