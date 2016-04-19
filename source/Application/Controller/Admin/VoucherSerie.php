@@ -28,7 +28,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
  * and "voucherserie_main.tpl") to frame.
  * Admin Menu: Shop Settings -> Vouchers.
  */
-class VoucherSerieController extends \oxAdminView
+class VoucherSerie extends \oxAdminView
 {
 
     /**

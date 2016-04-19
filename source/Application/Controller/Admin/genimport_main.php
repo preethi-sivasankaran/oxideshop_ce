@@ -25,6 +25,6 @@
  *
  * @deprecated on b-dev This class should not be used for direct extending. Please use parent class instead.
  */
-class genimport_main extends \OxidEsales\Eshop\Application\Controller\Admin\GenericImportMainController
+class genimport_main extends \OxidEsales\Eshop\Application\Controller\Admin\GenericImportMain
 {
 }

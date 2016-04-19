@@ -32,7 +32,7 @@ use oxConnectionException;
  * Administrator login form.
  * Performs administrator login form data collection.
  */
-class LoginController extends \oxAdminView
+class Login extends \oxAdminView
 {
     /** Login page view id. */
     CONST VIEW_ID = 'login';

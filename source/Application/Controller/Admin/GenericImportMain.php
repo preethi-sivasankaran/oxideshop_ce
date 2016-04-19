@@ -28,7 +28,7 @@ use oxRegistry;
 /**
  * Admin general export manager.
  */
-class GenericImportMainController extends \oxAdminDetails
+class GenericImportMain extends \oxAdminDetails
 {
 
     /**

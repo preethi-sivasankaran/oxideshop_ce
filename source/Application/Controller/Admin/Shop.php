@@ -28,7 +28,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
  * and "shop_main.tpl") to frame.
  * Admin Menu: Main Menu -> Core Settings.
  */
-class ShopController extends \oxAdminView
+class Shop extends \oxAdminView
 {
     const CURRENT_TEMPLATE = 'shop.tpl';
 

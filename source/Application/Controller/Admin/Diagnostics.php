@@ -26,7 +26,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
  * Checks Version of System files.
  * Admin Menu: Service -> Diagnostics Tool.
  */
-class DiagnosticsController extends \oxAdminView
+class Diagnostics extends \oxAdminView
 {
 
     /**

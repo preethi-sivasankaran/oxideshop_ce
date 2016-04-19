@@ -27,7 +27,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
  * and "vendor_main.tpl") to frame.
  * Admin Menu: Settings -> Vendors
  */
-class VendorController extends \oxAdminView
+class Vendor extends \oxAdminView
 {
 
     /**

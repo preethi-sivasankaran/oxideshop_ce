@@ -27,7 +27,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
  * and "attribute_main.tpl") to frame.
  * Admin Menu: Manage Products -> Attributes.
  */
-class AttributeController extends \oxAdminView
+class Attribute extends \oxAdminView
 {
 
     /**

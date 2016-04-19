@@ -27,7 +27,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
  * and "article_main.tpl") to frame.
  * Admin Menu: Manage Products -> Articles.
  */
-class ArticleController extends \oxAdminView
+class Article extends \oxAdminView
 {
 
     /**

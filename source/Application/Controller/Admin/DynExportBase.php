@@ -39,7 +39,7 @@ DEFINE("ERR_FILEIO", 1);
  *
  * @subpackage dyn
  */
-class DynamicExportBase extends \oxAdminDetails
+class DynExportBase extends \oxAdminDetails
 {
 
     /**
