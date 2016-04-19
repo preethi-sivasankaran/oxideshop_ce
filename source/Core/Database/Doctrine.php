@@ -23,6 +23,7 @@ namespace OxidEsales\Eshop\Core\Database;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\PDOException;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
 use OxidEsales\Eshop;
@@ -577,7 +578,7 @@ class Doctrine extends oxLegacyDb implements DatabaseInterface, LoggerAwareInter
     /**
      * Closes an open connection
      */
-    protected function closeConnection()
+    public function closeConnection()
     {
         $this->connection->close();
     }
@@ -675,6 +676,18 @@ class Doctrine extends oxLegacyDb implements DatabaseInterface, LoggerAwareInter
                 $exceptionClass = 'oxConnectionException';
                 break;
             case $exception instanceof DBALException:
+                /**
+                 * Doctrine uses passes the message and the code of the PDO Exception, which would break backward
+                 * compatibility as it uses SQLSTATE error code (string), but the shop used to the SQL errors (integer)
+                 * See http://php.net/manual/de/class.pdoexception.php For details and discussion.
+                 * Fortunately we can access PDOException and recover the original SQL error code and message.
+                 */
+                /** @var PDOException $pdoException */
+                $pdoException = $exception->getPrevious();
+                $code = $pdoException->errorInfo[1];
+                $message = $pdoException->errorInfo[2];
+                $exceptionClass = 'OxidEsales\Eshop\Core\exception\DatabaseException';
+                break;
             default:
                 $exceptionClass = 'OxidEsales\Eshop\Core\exception\DatabaseException';
         }

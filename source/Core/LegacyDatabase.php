@@ -41,14 +41,14 @@ class LegacyDatabase extends \oxSuperCfg implements Eshop\Core\Database\Database
     /**
      * Database connection object
      *
-     * @var mysql_driver|mysql_extend|mysql_meta|mysqli_driver|mysqli_extend|mysqli_extra|object_ADOConnection|pear_ADOConnection
+     * @var mysql_driver_ADOConnection|mysql_extend_ADOConnection|mysql_meta_ADOConnection|mysqli_driver_ADOConnection|mysqli_extend_ADOConnection|mysqli_extra_ADOConnection|object_ADOConnection|pear_ADOConnection
      */
     protected $_oDb = null;
 
     /**
      * Set connection
      *
-     * @param mysql_driver|mysql_extend|mysql_meta|mysqli_driver|mysqli_extend|mysqli_extra|object_ADOConnection|pear_ADOConnection $connection
+     * @param mysql_driver_ADOConnection|mysql_extend_ADOConnection|mysql_meta_ADOConnection|mysqli_driver_ADOConnection|mysqli_extend_ADOConnection|mysqli_extra_ADOConnection|object_ADOConnection|pear_ADOConnection $connection
      */
     public function setConnection($connection)
     {

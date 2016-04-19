@@ -43,7 +43,7 @@ interface DatabaseInterface
     /**
      * Setter for the database connection.
      *
-     * @param mysql_driver|mysql_extend|mysql_meta|mysqli_driver|mysqli_extend|mysqli_extra|object_ADOConnection|pear_ADOConnection $connection The connection to the database.
+     * @param mysql_driver_ADOConnection|mysql_extend_ADOConnection|mysql_meta_ADOConnection|mysqli_driver_ADOConnection|mysqli_extend_ADOConnection|mysqli_extra_ADOConnection|object_ADOConnection|pear_ADOConnection $connection The connection to the database.
      */
     public function setConnection($connection);
 
@@ -61,7 +61,7 @@ interface DatabaseInterface
      *
      * @param bool $executeOnSlave Execute this statement on the slave database. Only evaluated in a master - slave setup.
      *
-     * @return mysql_driver|mysql_extend|mysql_meta|mysqli_driver|mysqli_extend|mysqli_extra|object_ADOConnection|pear_ADOConnection The connection to the database.
+     * @return mysql_driver_ADOConnection|mysql_extend_ADOConnection|mysql_meta_ADOConnection|mysqli_driver_ADOConnection|mysqli_extend_ADOConnection|mysqli_extra_ADOConnection|object_ADOConnection|pear_ADOConnection The connection to the database.
      */
     public function getDb($executeOnSlave = true);
 
@@ -184,20 +184,6 @@ interface DatabaseInterface
      * @return int The number of rows affected by the last sql statement.
      */
     public function affected_rows();
-
-    /**
-     * Get the last error number, occurred while executing a sql statement through any of the methods in this class.
-     *
-     * @return int The last mysql error number.
-     */
-    public function errorNo();
-
-    /**
-     * Get the last error message, occurred while executing a sql statement through any of the methods in this class.
-     *
-     * @return string The last error message.
-     */
-    public function errorMsg();
 
     /**
      * Quote the given string.

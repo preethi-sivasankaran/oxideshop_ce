@@ -29,6 +29,7 @@ use mysqli_driver_ADOConnection;
 use oxAdoDbException;
 use oxConnectionException;
 use oxDb;
+use OxidEsales\Eshop\Core\exception\DatabaseException;
 use oxLegacyDb;
 use oxRegistry;
 use PHPMailer;
@@ -436,7 +437,7 @@ class Database
         try {
             $this->connectToDatabase($connection, $instanceType);
         } catch (oxAdoDbException $e) {
-            $this->_onConnectionError($connection);
+            $this->_onConnectionError($e);
         }
         self::_setUp($connection);
 
@@ -565,11 +566,11 @@ class Database
     /**
      * Notifying shop owner about connection problems
      *
-     * @param ADOConnection $connection database connection instance
+     * @param \Exception $exception Database exception
      *
-     * @throws oxConnectionException
+     * @throws DatabaseException
      */
-    protected function _notifyConnectionErrors($connection)
+    protected function _notifyConnectionErrors(\Exception $exception)
     {
         // notifying shop owner about connection problems
         if (($adminEmail = self::_getConfigParam('_sAdminEmail'))) {
@@ -586,8 +587,8 @@ class Database
                 Date: {$date}
                 Shop: {$failedShop}
 
-                mysql error: " . $connection->errorMsg() . "
-                mysql error no: " . $connection->errorNo() . "
+                mysql error: " . $exception->getMessage() . "
+                mysql error no: " . $exception->getCode() . "
 
                 Script: {$script}
                 Referer: {$referer}";
@@ -595,10 +596,12 @@ class Database
             $this->_sendMail($adminEmail, $warningSubject, $warningBody);
         }
 
-        //only exception to default construction method
-        $exception = new oxConnectionException();
-        $exception->setMessage('EXCEPTION_CONNECTION_NODB');
-        $exception->setConnectionError(self::_getConfigParam('_dbUser') . 's' . getShopBasePath() . $connection->errorMsg());
+        // Re throw the exception
+        $message = 'EXCEPTION_CONNECTION_NODB';
+        $code = $exception->getCode();
+        // @todo Add DatabaseConnectionException, which implements oxConnectionException methods and is used instead
+        $exception = new DatabaseException($message, $code, $exception);
+        // $exception->setConnectionError(self::_getConfigParam('_dbUser') . 's' . getShopBasePath() . $exception->getMessage());
         throw $exception;
     }
 
@@ -606,9 +609,9 @@ class Database
      * In case of connection error - redirects to setup
      * or send notification message for shop owner
      *
-     * @param ADOConnection $connection database connection instance
+     * @param \Exception $exception Database exception
      */
-    protected function _onConnectionError($connection)
+    protected function _onConnectionError(\Exception $exception)
     {
         $config = join('', file(getShopBasePath() . 'config.inc.php'));
 
@@ -624,7 +627,7 @@ class Database
             exit();
         } else {
             // notifying about connection problems
-            $this->_notifyConnectionErrors($connection);
+            $this->_notifyConnectionErrors($exception);
         }
     }
 
