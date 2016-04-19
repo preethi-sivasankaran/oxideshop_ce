@@ -109,11 +109,11 @@ class Integration_Multilanguage_AdditionalTablesTest extends MultilanguageTestCa
 
         //insert testdata for language id 0
         $sql = "INSERT INTO addtest (OXID, TITLE) VALUES ('" . $oxid . "', 'some default title')";
-        oxDb::getDb()->query($sql);
+        oxDb::getDb()->execute($sql);
 
         //insert testdata for last added language id in set1 table
         $sql = "INSERT INTO addtest_set1 (OXID, TITLE_" . $languageId . ") VALUES ('" . $oxid . "', 'some additional title')";
-        oxDb::getDb()->query($sql);
+        oxDb::getDb()->execute($sql);
 
         $sql = "SELECT TITLE FROM " . getViewName('addtest', $languageId) . " WHERE OXID = '" . $oxid . "'";
         $this->assertSame('some additional title', oxDb::getDb()->getOne($sql));
@@ -139,11 +139,11 @@ class Integration_Multilanguage_AdditionalTablesTest extends MultilanguageTestCa
 
         //insert testdata for language id 0
         $sql = "INSERT INTO addtest (OXID, TITLE) VALUES ('" . $oxid . "', 'some default title')";
-        oxDb::getDb()->query($sql);
+        oxDb::getDb()->execute($sql);
 
         //insert testdata for last added language id in set1 table
         $sql = "INSERT INTO addtest_set1 (OXID, TITLE_" . $languageId . ") VALUES ('" . $oxid . "', 'some additional title')";
-        oxDb::getDb()->query($sql);
+        oxDb::getDb()->execute($sql);
 
         $sql = "SELECT TITLE FROM " . getViewName('addtest', $languageId) . " WHERE OXID = '" . $oxid . "'";
         $this->assertSame('some additional title', oxDb::getDb()->getOne($sql));
@@ -173,7 +173,7 @@ class Integration_Multilanguage_AdditionalTablesTest extends MultilanguageTestCa
                 "PRIMARY KEY (`OXID`)" .
                 ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='for testing'";
 
-        oxDb::getDb()->query($sql);
+        oxDb::getDb()->execute($sql);
         oxDb::getInstance()->getTableDescription($name); //throws exception if table does not exist
         $this->additionalTables[] = $name;
     }
@@ -188,7 +188,7 @@ class Integration_Multilanguage_AdditionalTablesTest extends MultilanguageTestCa
         $sql = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME LIKE '%" . $name . "%'";
         $result = oxDb::getDb(oxDb::FETCH_MODE_ASSOC)->getArray($sql);
         foreach ($result as $sub) {
-            oxDb::getDb()->query("DROP TABLE IF EXISTS `" . $sub['TABLE_NAME'] . "`");
+            oxDb::getDb()->execute("DROP TABLE IF EXISTS `" . $sub['TABLE_NAME'] . "`");
         }
     }
 

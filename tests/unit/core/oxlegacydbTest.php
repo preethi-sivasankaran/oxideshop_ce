@@ -175,7 +175,7 @@ class Unit_Core_oxLegacyDbTest extends OxidTestCase
         $oLegacyDb = $this->getMock("oxLegacyDb", array("getDb"));
         $oLegacyDb->expects($this->once())->method('getDb')->with($this->equalTo(false))->will($this->returnValue($oDbLib));
 
-        $oLegacyDb->query('query', false, false);
+        $oLegacyDb->execute('query', false, false);
     }
 
     /**
