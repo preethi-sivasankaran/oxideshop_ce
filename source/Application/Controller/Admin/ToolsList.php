@@ -24,6 +24,8 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
 
 use oxRegistry;
 use oxDb;
+use oxStr;
+use Exception;
 
 /**
  * Admin systeminfo manager.

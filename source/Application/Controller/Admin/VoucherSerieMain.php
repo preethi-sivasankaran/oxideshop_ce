@@ -56,6 +56,13 @@ class VoucherSerieMain extends \DynExportBase
     protected $_sThisTemplate = "voucherserie_main.tpl";
 
     /**
+     * View id, use old class name for compatibility reasons.
+     *
+     * @var string
+     */
+    protected $viewId = 'voucherserie_main';
+
+    /**
      * Executes parent method parent::render(), creates oxvoucherserie object,
      * passes data to Smarty engine and returns name of template file
      * "voucherserie_list.tpl".

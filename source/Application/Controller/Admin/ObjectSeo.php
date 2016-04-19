@@ -29,7 +29,7 @@ use stdClass;
 /**
  * Base seo config class.
  */
-class ObjectSeoController extends \oxAdminDetails
+class ObjectSeo extends \oxAdminDetails
 {
     /**
      * Executes parent method parent::render(),

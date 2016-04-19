@@ -30,7 +30,7 @@ use oxRegistry;
  * this attribute, etc.
  * Admin Menu: Manage Products -> Attributes -> Gruppen.
  */
-class Attribute_Category extends \oxAdminDetails
+class AttributeCategory extends \oxAdminDetails
 {
 
     /**

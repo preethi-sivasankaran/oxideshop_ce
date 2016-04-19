@@ -25,6 +25,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
 use oxRegistry;
 use oxDb;
 use oxNoJsValidator;
+use Exception;
 
 /**
  * Admin article main selectlist manager.

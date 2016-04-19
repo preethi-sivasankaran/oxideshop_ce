@@ -23,6 +23,7 @@
 namespace OxidEsales\Eshop\Application\Controller\Admin;
 
 use oxRegistry;
+use oxDb;
 use oxField;
 use stdClass;
 

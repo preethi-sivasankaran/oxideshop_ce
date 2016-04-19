@@ -28,7 +28,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
  * and "payment_main.tpl") to frame.
  * Admin Menu: Shop Settings -> Payment Methods.
  */
-class AdminPaymentController extends \oxAdminView
+class AdminPayment extends \oxAdminView
 {
 
     /**

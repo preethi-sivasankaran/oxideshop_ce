@@ -25,6 +25,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
 use oxRegistry;
 use oxDb;
 use stdClass;
+use oxField;
 
 /**
  * Admin article RDFa payment manager.

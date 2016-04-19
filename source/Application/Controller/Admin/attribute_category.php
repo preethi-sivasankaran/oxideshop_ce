@@ -27,6 +27,6 @@
  *
  * @deprecated on b-dev This class should not be used for direct extending. Please use parent class instead.
  */
-class  extends \OxidEsales\Eshop\Application\Controller\Admin\
+class Attribute_Category extends \OxidEsales\Eshop\Application\Controller\Admin\AttributeCategory
 {
 }

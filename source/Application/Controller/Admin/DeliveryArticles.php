@@ -30,7 +30,7 @@ use oxRegistry;
  * and etc.
  * Admin Menu: Shop settings -> Shipping & Handling -> Main.
  */
-class Delivery_Articles extends \oxAdminDetails
+class DeliveryArticles extends \oxAdminDetails
 {
 
     /**

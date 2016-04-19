@@ -31,6 +31,7 @@ use oxUtilsFile;
 use oxExceptionToDisplay;
 use oxDbMetaDataHandler;
 use oxUtilsView;
+use category_main_ajax;
 
 /**
  * Admin article main categories manager.

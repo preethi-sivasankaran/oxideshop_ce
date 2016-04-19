@@ -23,6 +23,7 @@
 namespace OxidEsales\Eshop\Application\Controller\Admin;
 
 use oxRegistry;
+use oxDb;
 
 /**
  * Newsletter user group selection manager.

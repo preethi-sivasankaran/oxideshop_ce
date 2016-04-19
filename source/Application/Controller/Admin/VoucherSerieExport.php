@@ -24,8 +24,9 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
 
 use oxRegistry;
 use oxDb;
+use oxUtilsObject;
 
-/**
+    /**
  * General export class.
  */
 class VoucherSerieExport extends \VoucherSerie_Main

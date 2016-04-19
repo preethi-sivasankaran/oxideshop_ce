@@ -23,6 +23,7 @@
 namespace OxidEsales\Eshop\Application\Controller\Admin;
 
 use oxRegistry;
+use stdClass;
 
 /**
  * Admin vendor main screen.

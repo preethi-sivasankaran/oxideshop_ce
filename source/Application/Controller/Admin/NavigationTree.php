@@ -22,6 +22,11 @@
 
 namespace OxidEsales\Eshop\Application\Controller\Admin;
 
+use oxRegistry;
+use DOMXPath;
+use DOMDocument;
+use DOMElement;
+use stdClass;
 use OxidEsales\Eshop\Core\Edition\EditionRootPathProvider;
 use OxidEsales\Eshop\Core\Edition\EditionPathProvider;
 use OxidEsales\Eshop\Core\Edition\EditionSelector;

@@ -26,6 +26,7 @@ use oxRegistry;
 use oxDb;
 use oxField;
 use stdClass;
+use Exception;
 
 /**
  * Admin article extended parameters manager.

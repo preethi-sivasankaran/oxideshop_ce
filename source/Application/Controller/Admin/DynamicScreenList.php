@@ -30,7 +30,7 @@ use oxRegistry;
  *
  * @subpackage dyn
  */
-class DynScreenList extends \Dynscreen
+class DynamicScreenList extends \Dynscreen
 {
 
     /**

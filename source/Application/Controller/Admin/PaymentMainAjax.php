@@ -23,6 +23,7 @@
 namespace OxidEsales\Eshop\Application\Controller\Admin;
 
 use oxDb;
+use oxField;
 
 /**
  * Class manages payment user groups

@@ -23,6 +23,7 @@
 namespace OxidEsales\Eshop\Application\Controller\Admin;
 
 use oxRegistry;
+use stdClass;
 
 /**
  * Admin article main deliveryset manager.

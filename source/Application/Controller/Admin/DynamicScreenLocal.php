@@ -27,7 +27,7 @@ namespace OxidEsales\Eshop\Application\Controller\Admin;
  * Collects shop system settings, updates it on user submit, etc.
  * Admin Menu: Main Menu -> Core Settings -> System.
  */
-class DynScreenLocal extends \oxAdminView
+class DynamicScreenLocal extends \oxAdminView
 {
 
     /**

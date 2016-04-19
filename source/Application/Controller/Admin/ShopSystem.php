@@ -59,7 +59,7 @@ class ShopSystem extends \Shop_Config
         $sLangAbbr = $aLanguages[$oLang->getObjectTplLanguage()]->abbr;
 
         // loading shop location countries list (defines in which country shop exists)
-        include "shop_countries.php";
+        include "ShopCountries.php";
 
         $soxId = $this->getEditObjectId();
         if (!$soxId) {

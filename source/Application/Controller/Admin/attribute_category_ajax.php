@@ -26,7 +26,9 @@
  * This class must be empty because of others eShop editions classes which can be used instead of it.
  *
  * @deprecated on b-dev This class should not be used for direct extending. Please use parent class instead.
+ *
+ * @mixin \OxidEsales\EshopEnterprise\Application\Controller\Admin\AttributeCategoryAjax
  */
-class  extends \OxidEsales\Eshop\Application\Controller\Admin\
+class Attribute_Category_Ajax extends \OxidEsales\Eshop\Application\Controller\Admin\AttributeCategoryAjax
 {
 }

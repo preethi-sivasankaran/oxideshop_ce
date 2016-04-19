@@ -22,6 +22,7 @@
 
 namespace OxidEsales\Eshop\Application\Controller\Admin;
 
+use oxConfig;
 use oxRegistry;
 use oxException;
 
