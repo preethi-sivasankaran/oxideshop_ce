@@ -206,7 +206,9 @@ class NavigationTree extends \oxSuperCfg
             }
 
             // checking for setup page
-            if (file_exists($myConfig->getConfigParam('sShopDir') . "/Application/Controller/Admin/{$sFile}.php")) {
+            if (    file_exists($myConfig->getConfigParam('sShopDir') . "/Application/Controller/Admin/{$sFile}.php")
+                 || file_exists($myConfig->getConfigParam('sShopDir') . "/Application/Controller/Admin/" . ucfirst($sFile) . ".php")
+                ) {
                 $oTabElem = new DOMElement('TAB');
                 $oNode->appendChild($oTabElem);
                 $oTabElem->setAttribute('id', 'dyn_interface');
