@@ -30,6 +30,7 @@ use oxDb;
 use oxCookieException;
 use oxUtilsObject;
 use stdClass;
+use Exception;
 
 //max integer
 define('MAX_64BIT_INTEGER', '18446744073709551615');
