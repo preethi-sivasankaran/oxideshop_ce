@@ -288,19 +288,33 @@ class DoctrineTest extends DatabaseInterfaceImplementationTest
     {
         return array(
             array(
-                'If parameter rowCount is integer 2 and offset is string "WOULD PRODUCE AN ERROR IF EXPLOITABLE" , a warning will be triggered and the first 2 rows will be returned',
+                'If parameter rowCount is integer 2 and offset is string " UNION SELECT oxusername FROM oxuser" , a warning will be triggered and the first 2 rows will be returned',
                 2, // row count
-                "WOULD PRODUCE AN ERROR IF EXPLOITABLE", // offset
+                " UNION SELECT oxusername FROM oxuser", // offset
                 [
                     [self::FIXTURE_OXID_1], [self::FIXTURE_OXID_2]  // expected result
                 ]
             ),
             array(
-                'If parameter rowCount is integer 2 and offset is string "1 WOULD PRODUCE AN ERROR IF EXPLOITABLE" , a warning will be triggered and last 2 rows will be returned',
+                'If parameter rowCount is integer 2 and offset is string "1  UNION SELECT oxusername FROM oxuser -- " , a warning will be triggered and last 2 rows will be returned',
                 2, // row count
-                "1 WOULD PRODUCE AN ERROR IF EXPLOITABLE", // offset
+                "1  UNION SELECT oxusername FROM oxuser", // offset
                 [
                     [self::FIXTURE_OXID_2], [self::FIXTURE_OXID_3]  // expected result
+                ]
+            ),
+            array(
+                'If parameter rowCount is string " UNION SELECT oxusername FROM oxuser  --" and offset is 0, a warning will be triggered and the first 2 rows will be returned',
+                " UNION SELECT oxusername FROM oxuser  --", // row count
+                0, // offset
+                []  // expected result
+            ),
+            array(
+                'If parameter rowCount is string "1 UNION SELECT oxusername FROM oxuser  --" and offset is 0, a warning will be triggered and the first 2 rows will be returned',
+                "1  UNION SELECT oxusername FROM oxuser --", // row count
+                0, // offset
+                [
+                    [self::FIXTURE_OXID_1]  // expected result
                 ]
             ),
         );
