@@ -247,4 +247,62 @@ class DoctrineTest extends DatabaseInterfaceImplementationTest
 
         $this->assertSame($expectedReturnValue, $actualReturnValue, $message);
     }
+
+    /**
+     * Test, that the method 'selectLimit' returns the expected rows from the database for different
+     * values of limit and offset.
+     *
+     * This test assumes that there are at least 3 entries in the table.
+     *
+     * @dataProvider dataProviderTestSelectLimitForInvalidOffsetAndLimit
+     *
+     * @param string $assertionMessage A message explaining the assertion
+     * @param int    $rowCount         Maximum number of rows to return
+     * @param int    $offset           Offset of the first row to return
+     * @param array  $expectedResult   The expected result of the method call.
+     */
+    public function testSelectLimitForInvalidOffsetAndLimit($assertionMessage, $rowCount, $offset, $expectedResult)
+    {
+        $this->loadFixtureToTestTable();
+        $sql = 'SELECT OXID FROM ' . self::TABLE_NAME . ' WHERE OXID IN (' .
+               '"' . self::FIXTURE_OXID_1 . '",' .
+               '"' . self::FIXTURE_OXID_2 . '",' .
+               '"' . self::FIXTURE_OXID_3 . '"' .
+               ')';
+        $resultSet = $this->database->selectLimit($sql, $rowCount, $offset);
+        $this->assertError(
+            E_USER_DEPRECATED,
+            'Parameters rowCount and offset have to be numeric in DatabaseInterface::selectLimit(). ' .
+            'Please fix your code as this error may trigger an exception in future versions of OXID eShop.'
+        );
+        $actualResult = $resultSet->getAll();
+
+        $this->assertSame($expectedResult, $actualResult, $assertionMessage);
+    }
+
+    /**
+     * Data provider for testing selectLimit() with invalid parameters
+     * @return array
+     */
+    public function dataProviderTestSelectLimitForInvalidOffsetAndLimit()
+    {
+        return array(
+            array(
+                'If parameter rowCount is integer 2 and offset is string "WOULD PRODUCE AN ERROR IF EXPLOITABLE" , a warning will be triggered and the first 2 rows will be returned',
+                2, // row count
+                "WOULD PRODUCE AN ERROR IF EXPLOITABLE", // offset
+                [
+                    [self::FIXTURE_OXID_1], [self::FIXTURE_OXID_2]  // expected result
+                ]
+            ),
+            array(
+                'If parameter rowCount is integer 2 and offset is string "1 WOULD PRODUCE AN ERROR IF EXPLOITABLE" , a warning will be triggered and last 2 rows will be returned',
+                2, // row count
+                "1 WOULD PRODUCE AN ERROR IF EXPLOITABLE", // offset
+                [
+                    [self::FIXTURE_OXID_2], [self::FIXTURE_OXID_3]  // expected result
+                ]
+            ),
+        );
+    }
 }
