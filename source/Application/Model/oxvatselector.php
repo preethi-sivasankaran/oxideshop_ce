@@ -158,6 +158,16 @@ class oxVatSelector extends oxSuperCfg
 
             return $dArticleVat;
         }
+        if ($oArticle->isVariant()) {
+            $sParentId = $oArticle->getParentId();
+            $oParentArticle = oxNew('oxArticle');
+            $oParentArticle->load($sParentId);
+            if ($oParentArticle->oxarticles__oxvat->value !== null) {
+                stopProfile("_assignPriceInternal");
+
+                return $oParentArticle->oxarticles__oxvat->value;
+            }
+        }
         if (($dArticleVat = $this->_getVatForArticleCategory($oArticle)) !== false) {
             stopProfile("_assignPriceInternal");
 
