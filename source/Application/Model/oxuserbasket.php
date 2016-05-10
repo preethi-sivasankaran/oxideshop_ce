@@ -170,7 +170,7 @@ class oxUserBasket extends oxBase
         }
         $sSelect .= "where oxuserbasketitems.oxbasketid = '" . $this->getId() . "' and $sViewName.oxid is not null ";
 
-        $sSelect .= " order by oxartnum, oxsellist, oxpersparam ";
+        $sSelect .= " order by oxartid, oxsellist, oxpersparam ";
 
         $oItems = oxNew('oxlist');
         $oItems->init('oxuserbasketitem');
