@@ -92,7 +92,7 @@ class UserExtend extends \oxAdminDetails
         $aParams['oxuser__oxactive'] = $oUser->oxuser__oxactive->value;
 
         $blNewsParams = oxRegistry::getConfig()->getRequestParameter("editnews");
-        if (isset($blNewsParams)) {
+        if (isset($blNewsParams) && $blNewsParams) {
             $oNewsSubscription = $oUser->getNewsSubscription();
             $oNewsSubscription->setOptInStatus((int) $blNewsParams);
             $oNewsSubscription->setOptInEmailStatus((int) oxRegistry::getConfig()->getRequestParameter("emailfailed"));
